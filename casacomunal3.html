@@ -2000,12 +2000,12 @@
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
     clearInterval(timer);
-    timer = setInterval(next, 3000);
+    timer = setInterval(next, 2500);
   }
 
   function next() { goTo(current + 1); }
 
-  timer = setInterval(next, 3000);
+  timer = setInterval(next, 2500);
 
   document.querySelector('.hero').addEventListener('click', function(e) {
     if (e.target.closest('.hero-dots')) return;
@@ -2112,7 +2112,7 @@
 
     function resetTimer() {
       clearInterval(timer);
-      timer = setInterval(() => goto(current + 1), 3000);
+      timer = setInterval(() => goto(current + 1), 2500);
     }
 
     el.addEventListener('mouseenter', () => clearInterval(timer));
