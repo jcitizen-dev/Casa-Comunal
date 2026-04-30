@@ -212,9 +212,6 @@
     align-items: center;
   }
 
-  @media (max-width: 600px) {
-    .hero-text-overlay { padding: 5rem 1.75rem 9rem; }
-  }
 
   .hero-eyebrow-text {
     font-size: 0.68rem;
@@ -273,7 +270,7 @@
   .hero-btn-ghost:hover { border-color: rgba(255,255,255,0.55); color: rgba(255,255,255,0.85); }
 
   @media (max-width: 600px) {
-    .hero-text-overlay { padding: 5rem 1.75rem 4.5rem; }
+    .hero-text-overlay { padding: 5rem 1.75rem max(8rem, calc(env(safe-area-inset-bottom) + 6rem)); }
     .hero-headline { margin-bottom: 1.5rem; }
   }
 
