@@ -1641,9 +1641,6 @@
           <img src="Casa%20Comunal%20Pics/Activities/p1040062-1.webp" alt="Beach Days" loading="lazy">
         </div>
       </div>
-      <button class="carousel-arrow prev" onclick="carouselMove('activitiesCarousel',-1)">&#8249;</button>
-      <button class="carousel-arrow next" onclick="carouselMove('activitiesCarousel',1)">&#8250;</button>
-      <div class="carousel-dots" id="activitiesDots"></div>
     </div>
   </div>
 </section>
@@ -2179,17 +2176,19 @@
 
     slides[0].classList.add('active');
 
-    slides.forEach((_, i) => {
-      const d = document.createElement('div');
-      d.className = 'cdot' + (i === 0 ? ' active' : '');
-      d.onclick = () => goto(i);
-      dotsEl.appendChild(d);
-    });
+    if (dotsEl) {
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'cdot' + (i === 0 ? ' active' : '');
+        d.onclick = () => goto(i);
+        dotsEl.appendChild(d);
+      });
+    }
 
     function update(prev, next) {
       slides[prev].classList.remove('active');
       slides[next].classList.add('active');
-      dotsEl.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('active', i === next));
+      if (dotsEl) dotsEl.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('active', i === next));
     }
 
     function goto(n) {
