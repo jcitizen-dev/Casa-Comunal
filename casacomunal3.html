@@ -1711,25 +1711,10 @@
     <div class="outreach-intro">
       <p data-i18n="outreach.p1">We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.</p>
       <p style="margin-top:1rem;" data-i18n="outreach.p2">Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.</p>
-    </div>
-    <div class="outreach-carousel-wrap">
-      <div class="section-carousel" id="outreachCarousel">
-        <div class="section-carousel-track" id="outreachTrack">
-          <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Community%20Outreach/e529f68d4e9e5ecb6565789acf91d314.webp" alt="Community gathering by the waterfront" loading="lazy"></div>
-          <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Community%20Outreach/1b017a6286c5afa59d9382d6ad526abd.webp" alt="Working alongside the local community" loading="lazy"></div>
-          <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Community%20Outreach/Surf+Circle.webp" alt="Surf program circle on the beach" loading="lazy"></div>
-          <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Community%20Outreach/Local+Surf+Kids.webp" alt="Local kids at the surf program" loading="lazy"></div>
-          <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Community%20Outreach/18_05_2009_Beach-CleanUp_Bocas.webp" alt="Beach and island clean-up initiatives" loading="lazy"></div>
-          <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Community%20Outreach/old-bank-clean-up.webp" alt="Community clean-up" loading="lazy"></div>
-        </div>
-        <button class="carousel-arrow prev" onclick="carouselMove('outreachCarousel',-1)">&#8249;</button>
-        <button class="carousel-arrow next" onclick="carouselMove('outreachCarousel',1)">&#8250;</button>
-        <div class="carousel-dots" id="outreachDots"></div>
+      <p style="margin-top:1rem;" data-i18n="outreach.cta">Interested in getting involved or learning more about our community programs? We'd love to hear from you.</p>
+      <div style="margin-top:1.6rem;">
+        <a class="booking-link" href="mailto:info@casacomunalpanama.com" data-i18n="outreach.btn">Get in Touch</a>
       </div>
-    </div>
-    <div class="outreach-cta">
-      <p data-i18n="outreach.cta">Interested in getting involved or learning more about our community programs? We'd love to hear from you.</p>
-      <a class="booking-link" href="mailto:info@casacomunalpanama.com" data-i18n="outreach.btn">Get in Touch</a>
     </div>
   </div>
 </section>
@@ -2061,7 +2046,7 @@
     'rental': ['vrCarousel'],
     'bocas': ['islandsCarousel'],
     'activities': ['activitiesCarousel'],
-    'outreach': ['outreachCarousel']
+    'outreach': []
   };
 
   function showPage(id) {
@@ -2211,7 +2196,7 @@
     carouselState[id](cur + dir);
   }
 
-  ['activitiesCarousel','islandsCarousel','vrCarousel','outreachCarousel'].forEach(initCarousel);
+  ['activitiesCarousel','islandsCarousel','vrCarousel'].forEach(initCarousel);
 
   // Wire VR carousel lightbox (fallback for browsers where DOMContentLoaded already fired)
   (function() {
