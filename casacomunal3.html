@@ -1992,23 +1992,13 @@
 
   // ── HERO SLIDESHOW ──
   const slides = document.querySelectorAll('.slide');
-  const dotsContainer = document.getElementById('dots');
   let current = 0;
   let timer;
 
-  slides.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i === 0 ? ' active' : '');
-    dot.onclick = (e) => { e.stopPropagation(); goTo(i); };
-    dotsContainer.appendChild(dot);
-  });
-
   function goTo(n) {
     slides[current].classList.remove('active');
-    dotsContainer.children[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
-    dotsContainer.children[current].classList.add('active');
     clearInterval(timer);
     timer = setInterval(next, 3000);
   }
