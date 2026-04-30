@@ -55,7 +55,10 @@
     color: var(--dark);
     text-decoration: none;
     text-transform: uppercase;
+    transition: color 0.2s;
   }
+
+  .nav-logo a:hover { color: var(--accent); }
 
   .nav-links {
     display: flex;
@@ -124,20 +127,51 @@
   .dropdown a:last-child { border-bottom: none; }
   .dropdown a:hover { background: var(--sand); }
 
-  .nav-lang {
+  /* ── LANGUAGE SWITCHER ── */
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-left: 1px solid var(--light-border);
+    padding-left: 1rem;
+    height: 64px;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    font-family: 'Jost', sans-serif;
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--mid);
-    text-decoration: none;
-    padding: 0 1rem;
-    border-left: 1px solid var(--light-border);
-    height: 64px;
-    line-height: 64px;
-    display: block;
+    cursor: pointer;
+    padding: 0 0.35rem;
     transition: color 0.2s;
+    line-height: 1;
   }
-  .nav-lang:hover { color: var(--accent); }
+  .lang-btn:hover { color: var(--dark); }
+  .lang-btn.active { color: var(--dark); font-weight: 500; }
+  .lang-sep {
+    color: var(--light-border);
+    font-size: 0.75rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .mobile-lang-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--light-border);
+  }
+  .mobile-lang-row .lang-btn {
+    font-size: 0.82rem;
+    color: var(--dark);
+    letter-spacing: 0.16em;
+    padding: 0 0.4rem;
+  }
+  .mobile-lang-row .lang-sep { color: var(--light-border); }
 
   /* ── HERO SLIDESHOW ── */
   .hero {
@@ -170,9 +204,16 @@
     position: absolute;
     bottom: 0; left: 0; right: 0;
     z-index: 5;
-    padding: 7rem 4rem 5rem;
+    padding: 7rem 4rem 7rem;
     background: linear-gradient(to top, rgba(10,10,8,0.68) 0%, rgba(10,10,8,0.15) 55%, transparent 100%);
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .hero-text-overlay { padding: 5rem 1.75rem 9rem; }
   }
 
   .hero-eyebrow-text {
@@ -1250,12 +1291,18 @@
   <div class="nav-logo"><a href="#" onclick="showPage('home'); return false;">Casa Comunal</a></div>
 
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('rental'); return false;">Vacation Rental</a></li>
+    <li><a href="#" onclick="showPage('rental'); return false;" data-i18n="nav.rental">Vacation Rental</a></li>
     <li><a href="#" onclick="showPage('bocas'); return false;">Bocas del Toro</a></li>
-    <li><a href="#" onclick="showPage('activities'); return false;">Activities</a></li>
-    <li><a href="#" onclick="showPage('getting-here'); return false;">Getting Here</a></li>
-    <li><a href="#" onclick="showPage('outreach'); return false;">Help Out</a></li>
-    <a class="nav-lang" href="#">Español</a>
+    <li><a href="#" onclick="showPage('activities'); return false;" data-i18n="nav.activities">Activities</a></li>
+    <li><a href="#" onclick="showPage('getting-here'); return false;" data-i18n="nav.getting-here">Getting Here</a></li>
+    <li><a href="#" onclick="showPage('outreach'); return false;" data-i18n="nav.help-out">Help Out</a></li>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+    </div>
   </ul>
 
   <div class="hamburger" onclick="toggleMenu()">
@@ -1265,12 +1312,18 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#" onclick="showPage('rental'); toggleMenu(); return false;">Vacation Rental</a>
+  <a href="#" onclick="showPage('rental'); toggleMenu(); return false;" data-i18n="nav.rental">Vacation Rental</a>
   <a href="#" onclick="showPage('bocas'); toggleMenu(); return false;">Bocas del Toro</a>
-  <a href="#" onclick="showPage('activities'); toggleMenu(); return false;">Activities</a>
-  <a href="#" onclick="showPage('getting-here'); toggleMenu(); return false;">Getting Here</a>
-  <a href="#" onclick="showPage('outreach'); toggleMenu(); return false;">Help Out</a>
-  <a href="#" onclick="toggleMenu()">Español</a>
+  <a href="#" onclick="showPage('activities'); toggleMenu(); return false;" data-i18n="nav.activities">Activities</a>
+  <a href="#" onclick="showPage('getting-here'); toggleMenu(); return false;" data-i18n="nav.getting-here">Getting Here</a>
+  <a href="#" onclick="showPage('outreach'); toggleMenu(); return false;" data-i18n="nav.help-out">Help Out</a>
+  <div class="mobile-lang-row">
+    <button class="lang-btn active" onclick="setLanguage('en'); toggleMenu()">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" onclick="setLanguage('es'); toggleMenu()">ES</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" onclick="setLanguage('fr'); toggleMenu()">FR</button>
+  </div>
 </div>
 
 <!-- PAGE: HOME -->
@@ -1347,8 +1400,8 @@
   <!-- Hero text overlay -->
   <div class="hero-text-overlay">
     <div class="hero-cta-row">
-      <a href="mailto:info@casacomunalpanama.com" class="hero-btn">Book Now</a>
-      <a href="#" onclick="showPage('rental'); return false;" class="hero-btn-ghost">See Inside</a>
+      <a href="mailto:info@casacomunalpanama.com" class="hero-btn" data-i18n="hero.book">Book Now</a>
+      <a href="#" onclick="showPage('rental'); return false;" class="hero-btn-ghost" data-i18n="hero.see">See Inside</a>
     </div>
   </div>
 
@@ -1360,7 +1413,7 @@
 <section class="dwell-section">
   <div class="badges-row">
     <div class="badge-block">
-      <p class="dwell-label">As featured on</p>
+      <p class="dwell-label" data-i18n="badge.featured">As featured on</p>
       <a href="https://www.dwell.com/article/a-community-oriented-vacation-rental-in-panamanian-paradise-0cd6e907" target="_blank" rel="noopener">
         <div class="dwell-text-badge">
           <span>Dwell.com</span>
@@ -1368,7 +1421,7 @@
       </a>
     </div>
     <div class="badge-block">
-      <p class="dwell-label">Airbnb Superhost</p>
+      <p class="dwell-label" data-i18n="badge.superhost">Airbnb Superhost</p>
       <img class="superhost-badge" src="Casa%20Comunal%20Pics/Super.webp" alt="Airbnb Superhost">
     </div>
   </div>
@@ -1376,13 +1429,13 @@
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <h2 class="about-tagline">Casa Comunal is home.</h2>
+  <h2 class="about-tagline" data-i18n="about.tagline">Casa Comunal is home.</h2>
 
-  <p>Nestled directly upon the lush shores of the Caribbean and a ten minute walk from the best and most consistent breaks in Bocas del Toro, this warm and inviting space was designed respectfully of its environment with the intent to promote shared learning, spirited interaction and above all, human connection. It is a place where bonds are formed so strongly within that they benefit the local community outside.</p>
+  <p data-i18n="about.p1">Nestled directly upon the lush shores of the Caribbean and a ten minute walk from the best and most consistent breaks in Bocas del Toro, this warm and inviting space was designed respectfully of its environment with the intent to promote shared learning, spirited interaction and above all, human connection. It is a place where bonds are formed so strongly within that they benefit the local community outside.</p>
 
-  <p>This open-plan, modular, oceanfront loft is ideal for family gatherings, group holidays, and cultural learning experiences. As a vacation property, it can be rented as one large 5 bedroom, 4 bathroom house or two separate houses — "Casa Norte" a 3bed/2bath and "Casa Sur" a 2bed/2bath. As a site for Learning Retreats, the home is designed with modular walls and furniture that can be opened and expanded for multiple uses to maximize collaboration, idea-sharing and most of all, a perfect work/play balance.</p>
+  <p data-i18n="about.p2">This open-plan, modular, oceanfront loft is ideal for family gatherings, group holidays, and cultural learning experiences. As a vacation property, it can be rented as one large 5 bedroom, 4 bathroom house or two separate houses — "Casa Norte" a 3bed/2bath and "Casa Sur" a 2bed/2bath. As a site for Learning Retreats, the home is designed with modular walls and furniture that can be opened and expanded for multiple uses to maximize collaboration, idea-sharing and most of all, a perfect work/play balance.</p>
 
-  <p>Our mission is to provide our guests a comfortable, well-rounded getaway integrated with activities such as surfing, yoga and a variety of other adventures available throughout the Bocatoranian archipelago while also giving back to the island and its local community.</p>
+  <p data-i18n="about.p3">Our mission is to provide our guests a comfortable, well-rounded getaway integrated with activities such as surfing, yoga and a variety of other adventures available throughout the Bocatoranian archipelago while also giving back to the island and its local community.</p>
 </section>
 
 </div><!-- end page-home -->
@@ -1422,7 +1475,7 @@
     <div class="carousel-dots" id="vrDots"></div>
     <div class="hero-text-overlay" style="pointer-events:none;">
       <div class="hero-cta-row">
-        <a href="mailto:info@casacomunalpanama.com" class="hero-btn">Book Now</a>
+        <a href="mailto:info@casacomunalpanama.com" class="hero-btn" data-i18n="hero.book">Book Now</a>
       </div>
     </div>
   </div>
@@ -1439,7 +1492,7 @@
 <!-- FLOORPLAN -->
 <section class="floorplan-section">
   <div class="property-desc-inner">
-    <h2 class="property-desc-headline" style="margin-bottom:2rem;">Floorplan</h2>
+    <h2 class="property-desc-headline" style="margin-bottom:2rem;" data-i18n="floorplan.title">Floorplan</h2>
   </div>
   <img src="Casa%20Comunal%20Pics/Floorplan-%20Modern.png" alt="Casa Comunal Floorplan — Casa Norte 3bed/2bath and Casa Sur 2bed/2bath" class="floorplan-img">
 </section>
@@ -1447,26 +1500,26 @@
 <!-- PROPERTY DESCRIPTION -->
 <section class="property-desc-section">
   <div class="property-desc-inner">
-    <h2 class="property-desc-headline">Two homes under one roof.<br>Rent one or both together.</h2>
+    <h2 class="property-desc-headline" data-i18n-html="prop.headline">Two homes under one roof.<br>Rent one or both together.</h2>
 
-    <p>Casa Comunal is truly one of a kind in Bocas del Toro. The minimalist architecture frames expansive Caribbean views while the landscaping works around the original treescapes the home was built among. The property spans 1,213 m² (⅓ acre) with 56 meters (184 ft) of private beachfront, 284 m² (3,050 sq ft) of interior space, and an additional 160 m² (1,722 sq ft) of covered deck. It can be rented as one large home or as two separate residences sharing a central entryway — with sliding walls that lock for complete privacy. Each home has its own private deck, separated by an open atrium.</p>
+    <p data-i18n="prop.p1">Casa Comunal is truly one of a kind in Bocas del Toro. The minimalist architecture frames expansive Caribbean views while the landscaping works around the original treescapes the home was built among. The property spans 1,213 m² (⅓ acre) with 56 meters (184 ft) of private beachfront, 284 m² (3,050 sq ft) of interior space, and an additional 160 m² (1,722 sq ft) of covered deck. It can be rented as one large home or as two separate residences sharing a central entryway — with sliding walls that lock for complete privacy. Each home has its own private deck, separated by an open atrium.</p>
 
     <div class="property-units">
       <div class="property-unit">
-        <h3><a href="https://www.airbnb.com/rooms/8941652" target="_blank" rel="noopener">Casa Sur</a> &mdash; 2 bed / 2 bath</h3>
-        <p>Both bedrooms have ensuite bathrooms with soaking tubs. The kitchen is the standout — a corner layout with island, oven, and dishwasher. Sleeps up to 5 guests.</p>
+        <h3><a href="https://www.airbnb.com/rooms/8941652" target="_blank" rel="noopener">Casa Sur</a> &mdash; <span data-i18n="prop.sur.beds">2 bed / 2 bath</span></h3>
+        <p data-i18n="prop.sur.desc">Both bedrooms have ensuite bathrooms with soaking tubs. The kitchen is the standout — a corner layout with island, oven, and dishwasher. Sleeps up to 5 guests.</p>
       </div>
       <div class="property-unit">
-        <h3><a href="https://www.airbnb.com/rooms/8941617" target="_blank" rel="noopener">Casa Norte</a> &mdash; 3 bed / 2 bath</h3>
-        <p>The master suite has a king bed (200×200 cm) and an oversized soaking tub. The second bedroom has a king; the third, a king plus a twin sofa bed (100×200 cm). The living room adds two full-sized hanging beds. All kings can split into twins — accommodating up to 9 guests in a range of configurations.</p>
+        <h3><a href="https://www.airbnb.com/rooms/8941617" target="_blank" rel="noopener">Casa Norte</a> &mdash; <span data-i18n="prop.norte.beds">3 bed / 2 bath</span></h3>
+        <p data-i18n="prop.norte.desc">The master suite has a king bed (200×200 cm) and an oversized soaking tub. The second bedroom has a king; the third, a king plus a twin sofa bed (100×200 cm). The living room adds two full-sized hanging beds. All kings can split into twins — accommodating up to 9 guests in a range of configurations.</p>
       </div>
       <div class="property-unit" style="grid-column: 1 / -1; border-top: 1px solid var(--light-border); padding-top: 2rem;">
-        <h3><a href="https://www.airbnb.com/rooms/8941660" target="_blank" rel="noopener">Casa Entera</a> &mdash; 5 bed / 4 bath</h3>
-        <p>Norte + Sur together. Rented as one, Casa Entera sleeps 13. Let us know your party's needs and we'll configure the beds accordingly.</p>
+        <h3><a href="https://www.airbnb.com/rooms/8941660" target="_blank" rel="noopener">Casa Entera</a> &mdash; <span data-i18n="prop.entera.beds">5 bed / 4 bath</span></h3>
+        <p data-i18n="prop.entera.desc">Norte + Sur together. Rented as one, Casa Entera sleeps 13. Let us know your party's needs and we'll configure the beds accordingly.</p>
       </div>
     </div>
 
-    <p>Designed with sustainability in mind: the water system runs on rain catchment, and tropical fruit trees provide organic produce throughout the property. Much of the furniture was handcrafted by local woodworkers from reclaimed materials and naturally fallen timber. Lighting is warm-toned dimmable LED throughout, and the home's orientation, windows, and ceiling fans were designed around natural cross-breeze patterns for maximum comfort without air conditioning.</p>
+    <p data-i18n="prop.p2">Designed with sustainability in mind: the water system runs on rain catchment, and tropical fruit trees provide organic produce throughout the property. Much of the furniture was handcrafted by local woodworkers from reclaimed materials and naturally fallen timber. Lighting is warm-toned dimmable LED throughout, and the home's orientation, windows, and ceiling fans were designed around natural cross-breeze patterns for maximum comfort without air conditioning.</p>
   </div>
 </section>
 
@@ -1482,39 +1535,39 @@
       <div class="section-carousel-track" id="islandsTrack">
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/Bocas-Del-Toro-6023445-smalltabletRetina.webp" alt="Isla Colón" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Isla Colón</div><div class="island-caption">The vibrant heart of the archipelago — restaurants, nightlife, and endless Caribbean charm.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name">Isla Colón</div><div class="island-caption" data-i18n="island.colon">The vibrant heart of the archipelago — restaurants, nightlife, and endless Caribbean charm.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/bocas_del_toro_dock.webp" alt="Bocas Town" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Bocas Town</div><div class="island-caption">The colorful waterfront hub of Bocas del Toro, where water taxis connect the islands.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name" data-i18n="island.bocastown.name">Bocas Town</div><div class="island-caption" data-i18n="island.bocastown">The colorful waterfront hub of Bocas del Toro, where water taxis connect the islands.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/Girl+Bike+copy.webp" alt="Big Creek" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Big Creek</div><div class="island-caption">Our home village — quiet, unhurried, and full of warmth.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name">Big Creek</div><div class="island-caption" data-i18n="island.bigcreek">Our home village — quiet, unhurried, and full of warmth.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/cayo-zapatillas-bocas-del-toro.webp" alt="Cayo Zapatilla" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Cayo Zapatilla</div><div class="island-caption">Postcard-perfect white sand beaches fringed with swaying palms.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name">Cayo Zapatilla</div><div class="island-caption" data-i18n="island.zapatilla">Postcard-perfect white sand beaches fringed with swaying palms.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/Isla-de-los-Pajaros-water.webp" alt="Isla de los Pájaros" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Isla de los Pájaros</div><div class="island-caption">A lush bird sanctuary rising dramatically from crystal Caribbean waters.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name">Isla de los Pájaros</div><div class="island-caption" data-i18n="island.pajaros">A lush bird sanctuary rising dramatically from crystal Caribbean waters.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/Isla-de-los-Pajaros-water%20(1).webp" alt="Isla Bastimentos" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Isla Bastimentos</div><div class="island-caption">Raw jungle, indigenous communities, and world-class surf breaks.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name">Isla Bastimentos</div><div class="island-caption" data-i18n="island.bastimentos">Raw jungle, indigenous communities, and world-class surf breaks.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/Screen+Shot+2015-08-17+at+5.54.22+PM.webp" alt="The Archipelago" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">The Archipelago</div><div class="island-caption">Over 200 islands, islets, and cays waiting to be explored.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name" data-i18n="island.archipelago.name">The Archipelago</div><div class="island-caption" data-i18n="island.archipelago">Over 200 islands, islets, and cays waiting to be explored.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/Screen+Shot+2015-08-18+at+1.29.29+PM.webp" alt="Ngäbe Culture" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Ngäbe Culture</div><div class="island-caption">The indigenous Ngäbe-Buglé people bring deep culture and artistry to the islands.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name" data-i18n="island.ngabe.name">Ngäbe Culture</div><div class="island-caption" data-i18n="island.ngabe">The indigenous Ngäbe-Buglé people bring deep culture and artistry to the islands.</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Our%20Islands/sloth-panama.webp" alt="Local Wildlife" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Local Wildlife</div><div class="island-caption">Three-toed sloths, poison dart frogs, and sea turtles call these islands home.</div></div>
+          <div class="carousel-island-overlay"><div class="island-name" data-i18n="island.wildlife.name">Local Wildlife</div><div class="island-caption" data-i18n="island.wildlife">Three-toed sloths, poison dart frogs, and sea turtles call these islands home.</div></div>
         </div>
       </div>
       <button class="carousel-arrow prev" onclick="carouselMove('islandsCarousel',-1)">&#8249;</button>
@@ -1527,11 +1580,11 @@
 <!-- BOCAS BLURB -->
 <section class="bocas-blurb-section">
   <div class="property-desc-inner">
-    <h2 class="property-desc-headline">Diversity is Discovery.</h2>
-    <p>The beauty of Bocas del Toro is its extraordinary range. Geographically and culturally, there are new discoveries at every turn — spread across five islands, each with its own distinct character, all within a quick boat ride of one another.</p>
-    <p>The landscape shifts just as dramatically as the culture. Hills for hiking, mangroves for exploring, pristinely calm white-sand beaches, and others with waves of every size and strength.</p>
-    <p>Colón, the main island, pulses with a Latin, Spanish-speaking community — salsa and reggaeton, slow-marinated chicken, rice and beans, habanero heat. Bastimentos, the largest island, is home to an Afro-Caribbean community that speaks Creole, jerk-smokes everything, and lives by reggae and dancehall. Woven throughout is a diverse expat community — European, North and South American, Chinese — whose shops and restaurants add even more to the mix: a charming French bakery, Argentinean and German kitchens, an organic American-style health food store.</p>
-    <p>And Bocas doesn't stop when the sun goes down. Restaurants feature fire-twirling shows, dive bars serve dollar beers over ping pong and billiards, wine bars and live jazz fill the evenings, and open-air clubs built over the water — complete with trampolines, tightropes, and swings — launch you straight into a midnight swim.</p>
+    <h2 class="property-desc-headline" data-i18n="bocas.headline">Diversity is Discovery.</h2>
+    <p data-i18n="bocas.p1">The beauty of Bocas del Toro is its extraordinary range. Geographically and culturally, there are new discoveries at every turn — spread across five islands, each with its own distinct character, all within a quick boat ride of one another.</p>
+    <p data-i18n="bocas.p2">The landscape shifts just as dramatically as the culture. Hills for hiking, mangroves for exploring, pristinely calm white-sand beaches, and others with waves of every size and strength.</p>
+    <p data-i18n="bocas.p3">Colón, the main island, pulses with a Latin, Spanish-speaking community — salsa and reggaeton, slow-marinated chicken, rice and beans, habanero heat. Bastimentos, the largest island, is home to an Afro-Caribbean community that speaks Creole, jerk-smokes everything, and lives by reggae and dancehall. Woven throughout is a diverse expat community — European, North and South American, Chinese — whose shops and restaurants add even more to the mix: a charming French bakery, Argentinean and German kitchens, an organic American-style health food store.</p>
+    <p data-i18n="bocas.p4">And Bocas doesn't stop when the sun goes down. Restaurants feature fire-twirling shows, dive bars serve dollar beers over ping pong and billiards, wine bars and live jazz fill the evenings, and open-air clubs built over the water — complete with trampolines, tightropes, and swings — launch you straight into a midnight swim.</p>
   </div>
 </section>
 
@@ -1540,13 +1593,6 @@
 <!-- PAGE: ACTIVITIES -->
 <div class="page" id="page-activities">
 
-<!-- ACTIVITIES HEADER -->
-<div class="activities-page-header">
-  <p class="section-eyebrow">What to Do</p>
-  <h2 class="section-title">Adventures Await</h2>
-  <p style="margin-top:1.5rem;font-size:0.95rem;color:var(--mid);max-width:560px;margin-left:auto;margin-right:auto;line-height:1.85;">From world-class surf breaks a ten-minute walk away to cacao farm tours, deep boarding, and botanical gardens — Bocas del Toro keeps you moving.</p>
-</div>
-
 <!-- ACTIVITIES CAROUSEL -->
 <section class="activities-section" id="activities">
   <div class="activities-carousel-wrap">
@@ -1554,51 +1600,51 @@
       <div class="section-carousel-track" id="activitiesTrack">
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/wide-1000-5.webp" alt="Surfing" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Surfing</div><div class="activity-desc">World-class waves minutes from your door</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.surfing">Surfing</div><div class="activity-desc" data-i18n="act.surfing.desc">World-class waves minutes from your door</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/029050132242202201051201084121157109006134222218.webp" alt="Snorkeling" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Snorkeling</div><div class="activity-desc">Explore vibrant reefs and marine life</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.snorkeling">Snorkeling</div><div class="activity-desc" data-i18n="act.snorkeling.desc">Explore vibrant reefs and marine life</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/deep-boarding-team-experience3.webp" alt="Deep Boarding" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Deep Boarding</div><div class="activity-desc">Glide through crystal-clear Caribbean waters</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.deepboarding">Deep Boarding</div><div class="activity-desc" data-i18n="act.deepboarding.desc">Glide through crystal-clear Caribbean waters</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/qualia-stand-up-paddle-boarding.webp" alt="Stand-Up Paddleboarding" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Stand-Up Paddleboarding</div><div class="activity-desc">Cruise the calm waters of the archipelago</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.sup">Stand-Up Paddleboarding</div><div class="activity-desc" data-i18n="act.sup.desc">Cruise the calm waters of the archipelago</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/IMG_0247+copy.webp" alt="Kayaking" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Kayaking</div><div class="activity-desc">Paddle through lush mangroves and hidden coves</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.kayaking">Kayaking</div><div class="activity-desc" data-i18n="act.kayaking.desc">Paddle through lush mangroves and hidden coves</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/tarpon-fishing.webp" alt="Fishing" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Fishing</div><div class="activity-desc">World-renowned tarpon and sport fishing</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.fishing">Fishing</div><div class="activity-desc" data-i18n="act.fishing.desc">World-renowned tarpon and sport fishing</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/vjiel2h.webp" alt="ATV Adventures" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">ATV Adventures</div><div class="activity-desc">Explore the jungle trails of Isla Colón</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.atv">ATV Adventures</div><div class="activity-desc" data-i18n="act.atv.desc">Explore the jungle trails of Isla Colón</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/large.webp" alt="Cave Exploration" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Cave Exploration</div><div class="activity-desc">Discover hidden grottos and natural wonders</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.caves">Cave Exploration</div><div class="activity-desc" data-i18n="act.caves.desc">Discover hidden grottos and natural wonders</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/cosechando_cacao_en_Remolino_Gentileza_Rodrigo_Velaidez_Chocaguan.webp" alt="Cacao Tours" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Cacao Tours</div><div class="activity-desc">Visit working cacao farms with local families</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.cacao">Cacao Tours</div><div class="activity-desc" data-i18n="act.cacao.desc">Visit working cacao farms with local families</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/Hawaii_Tropical_Botanical_Gardens_Hawaii.webp" alt="Botanical Gardens" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Botanical Gardens</div><div class="activity-desc">Wander through lush tropical flora</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.botanical">Botanical Gardens</div><div class="activity-desc" data-i18n="act.botanical.desc">Wander through lush tropical flora</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/Screen+Shot+2015-08-17+at+5.17.46+PM.webp" alt="Scooter Rentals" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Scooter Rentals</div><div class="activity-desc">Explore the island at your own pace</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.scooter">Scooter Rentals</div><div class="activity-desc" data-i18n="act.scooter.desc">Explore the island at your own pace</div></div>
         </div>
         <div class="carousel-slide" style="position:relative">
           <img src="Casa%20Comunal%20Pics/Activities/Screen+Shot+2015-08-17+at+5.32.57+PM.webp" alt="Zip-lining" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Zip-lining</div><div class="activity-desc">Soar through the rainforest canopy</div></div>
+          <div class="carousel-activity-overlay"><div class="activity-label" data-i18n="act.zipline">Zip-lining</div><div class="activity-desc" data-i18n="act.zipline.desc">Soar through the rainforest canopy</div></div>
         </div>
       </div>
       <button class="carousel-arrow prev" onclick="carouselMove('activitiesCarousel',-1)">&#8249;</button>
@@ -1611,39 +1657,39 @@
 <!-- ACTIVITIES LIST -->
 <section class="activities-list-section">
   <div class="activities-list-inner">
-    <p class="activities-list-intro">Surfing is a ten-minute walk from the house — the best and most consistent breaks in all of Bocas del Toro are right on your doorstep. Beyond that, the archipelago offers something for everyone.</p>
+    <p class="activities-list-intro" data-i18n="acts.intro">Surfing is a ten-minute walk from the house — the best and most consistent breaks in all of Bocas del Toro are right on your doorstep. Beyond that, the archipelago offers something for everyone.</p>
     <div class="activities-columns">
       <div class="activities-col">
-        <h3 class="activities-col-title">On the Water</h3>
+        <h3 class="activities-col-title" data-i18n="acts.water">On the Water</h3>
         <ul>
-          <li>Surfing</li>
-          <li>Paddle Boarding</li>
-          <li>Kayaking</li>
-          <li>Snorkeling</li>
-          <li>Free Diving</li>
-          <li>Deep Boarding</li>
-          <li>Scuba Diving</li>
-          <li>Fishing</li>
+          <li data-i18n="act.surfing">Surfing</li>
+          <li data-i18n="list.sup">Paddle Boarding</li>
+          <li data-i18n="act.kayaking">Kayaking</li>
+          <li data-i18n="act.snorkeling">Snorkeling</li>
+          <li data-i18n="list.freediving">Free Diving</li>
+          <li data-i18n="act.deepboarding">Deep Boarding</li>
+          <li data-i18n="list.scuba">Scuba Diving</li>
+          <li data-i18n="act.fishing">Fishing</li>
         </ul>
       </div>
       <div class="activities-col">
-        <h3 class="activities-col-title">On Land</h3>
+        <h3 class="activities-col-title" data-i18n="acts.land">On Land</h3>
         <ul>
-          <li>Yoga</li>
-          <li>Hiking</li>
-          <li>ATV Rentals</li>
-          <li>Dune Buggy Rentals</li>
-          <li>Scooter Rentals</li>
+          <li data-i18n="list.yoga">Yoga</li>
+          <li data-i18n="list.hiking">Hiking</li>
+          <li data-i18n="list.atv">ATV Rentals</li>
+          <li data-i18n="list.dunebuggy">Dune Buggy Rentals</li>
+          <li data-i18n="act.scooter">Scooter Rentals</li>
         </ul>
       </div>
       <div class="activities-col">
-        <h3 class="activities-col-title">Excursions</h3>
+        <h3 class="activities-col-title" data-i18n="acts.excursions">Excursions</h3>
         <ul>
-          <li>Island Excursion Tour</li>
-          <li>Botanical Garden Tour</li>
-          <li>Cocoa Farm Tour</li>
-          <li>Zipline Canopy Tour</li>
-          <li>Cave Tour</li>
+          <li data-i18n="list.islandtour">Island Excursion Tour</li>
+          <li data-i18n="list.botanical">Botanical Garden Tour</li>
+          <li data-i18n="list.cacao">Cocoa Farm Tour</li>
+          <li data-i18n="list.zipline">Zipline Canopy Tour</li>
+          <li data-i18n="list.cave">Cave Tour</li>
         </ul>
       </div>
     </div>
@@ -1658,18 +1704,18 @@
 <!-- GETTING HERE -->
 <section class="getting-here-section" id="getting-here">
   <div class="section-header" style="text-align:center;">
-    <h2 class="section-title">Getting Here</h2>
+    <h2 class="section-title" data-i18n="here.title">Getting Here</h2>
   </div>
   <div class="getting-here-inner">
     <img class="getting-here-map" src="Casa%20Comunal%20Pics/Getting%20Here-%20Modern.png" alt="Map showing routes to Casa Comunal in Bocas del Toro, Panama">
     <div class="getting-here-routes">
       <div class="getting-here-route">
-        <h3 class="route-title">Via Panama City</h3>
-        <p class="route-prose">Fly into Tocumen International Airport. We recommend spending a night in the city — The Canal, Casco Viejo, and the old town are well worth it. We're big fans of the <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. From there, take a taxi to Albrook Airport (30 min) and fly <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> direct to Bocas del Toro — about an hour. Grab a taxi from the airport and you're at Casa Comunal in 5 minutes.</p>
+        <h3 class="route-title" data-i18n="here.panama.title">Via Panama City</h3>
+        <p class="route-prose" data-i18n-html="here.panama.desc">Fly into Tocumen International Airport. We recommend spending a night in the city — The Canal, Casco Viejo, and the old town are well worth it. We're big fans of the <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. From there, take a taxi to Albrook Airport (30 min) and fly <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> direct to Bocas del Toro — about an hour. Grab a taxi from the airport and you're at Casa Comunal in 5 minutes.</p>
       </div>
       <div class="getting-here-route">
-        <h3 class="route-title">Via San José, Costa Rica</h3>
-        <p class="route-prose">Fly into Juan Santamaría International Airport in San José, then connect with <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> direct to Bocas del Toro. From the airport, a 5-minute taxi brings you straight to Casa Comunal.</p>
+        <h3 class="route-title" data-i18n="here.cr.title">Via San José, Costa Rica</h3>
+        <p class="route-prose" data-i18n-html="here.cr.desc">Fly into Juan Santamaría International Airport in San José, then connect with <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> direct to Bocas del Toro. From the airport, a 5-minute taxi brings you straight to Casa Comunal.</p>
       </div>
     </div>
   </div>
@@ -1683,12 +1729,12 @@
 <!-- COMMUNITY OUTREACH -->
 <section class="outreach-section" id="outreach">
   <div class="section-header" style="text-align:center;">
-    <h2 class="section-title">Help Out.</h2>
+    <h2 class="section-title" data-i18n="outreach.title">Help Out.</h2>
   </div>
   <div class="outreach-inner">
     <div class="outreach-intro">
-      <p>We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.</p>
-      <p style="margin-top:1rem;">Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.</p>
+      <p data-i18n="outreach.p1">We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.</p>
+      <p style="margin-top:1rem;" data-i18n="outreach.p2">Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.</p>
     </div>
     <div class="outreach-carousel-wrap">
       <div class="section-carousel" id="outreachCarousel">
@@ -1706,8 +1752,8 @@
       </div>
     </div>
     <div class="outreach-cta">
-      <p>Interested in getting involved or learning more about our community programs? We'd love to hear from you.</p>
-      <a class="booking-link" href="mailto:info@casacomunalpanama.com">Get in Touch</a>
+      <p data-i18n="outreach.cta">Interested in getting involved or learning more about our community programs? We'd love to hear from you.</p>
+      <a class="booking-link" href="mailto:info@casacomunalpanama.com" data-i18n="outreach.btn">Get in Touch</a>
     </div>
   </div>
 </section>
@@ -1719,10 +1765,277 @@
   <p>Big Creek, Isla Colón<br>Bocas Del Toro, Panamá</p>
   <p><a href="mailto:info@casacomunalpanama.com">info@casacomunalpanama.com</a></p>
   <div class="footer-divider"></div>
-  <p class="footer-credit">©Casa Comunal 2025 — All rights reserved<br>Photos courtesy of Olivier Frei and Maria Mangold</p>
+  <p class="footer-credit" data-i18n-html="footer.credit">©Casa Comunal 2025 — All rights reserved<br>Photos courtesy of Olivier Frei and Maria Mangold</p>
 </footer>
 
 <script>
+  // ── TRANSLATIONS ──
+  const translations = {
+    en: {
+      'nav.rental':       'Vacation Rental',
+      'nav.activities':   'Activities',
+      'nav.getting-here': 'Getting Here',
+      'nav.help-out':     'Help Out',
+      'hero.book':        'Book Now',
+      'hero.see':         'See Inside',
+      'badge.featured':   'As featured on',
+      'badge.superhost':  'Airbnb Superhost',
+      'about.tagline':    'Casa Comunal is home.',
+      'about.p1':         'Nestled directly upon the lush shores of the Caribbean and a ten minute walk from the best and most consistent breaks in Bocas del Toro, this warm and inviting space was designed respectfully of its environment with the intent to promote shared learning, spirited interaction and above all, human connection. It is a place where bonds are formed so strongly within that they benefit the local community outside.',
+      'about.p2':         'This open-plan, modular, oceanfront loft is ideal for family gatherings, group holidays, and cultural learning experiences. As a vacation property, it can be rented as one large 5 bedroom, 4 bathroom house or two separate houses — "Casa Norte" a 3bed/2bath and "Casa Sur" a 2bed/2bath. As a site for Learning Retreats, the home is designed with modular walls and furniture that can be opened and expanded for multiple uses to maximize collaboration, idea-sharing and most of all, a perfect work/play balance.',
+      'about.p3':         'Our mission is to provide our guests a comfortable, well-rounded getaway integrated with activities such as surfing, yoga and a variety of other adventures available throughout the Bocatoranian archipelago while also giving back to the island and its local community.',
+      'floorplan.title':  'Floorplan',
+      'prop.headline':    'Two homes under one roof.<br>Rent one or both together.',
+      'prop.p1':          'Casa Comunal is truly one of a kind in Bocas del Toro. The minimalist architecture frames expansive Caribbean views while the landscaping works around the original treescapes the home was built among. The property spans 1,213 m² (⅓ acre) with 56 meters (184 ft) of private beachfront, 284 m² (3,050 sq ft) of interior space, and an additional 160 m² (1,722 sq ft) of covered deck. It can be rented as one large home or as two separate residences sharing a central entryway — with sliding walls that lock for complete privacy. Each home has its own private deck, separated by an open atrium.',
+      'prop.sur.beds':    '2 bed / 2 bath',
+      'prop.sur.desc':    'Both bedrooms have ensuite bathrooms with soaking tubs. The kitchen is the standout — a corner layout with island, oven, and dishwasher. Sleeps up to 5 guests.',
+      'prop.norte.beds':  '3 bed / 2 bath',
+      'prop.norte.desc':  'The master suite has a king bed (200×200 cm) and an oversized soaking tub. The second bedroom has a king; the third, a king plus a twin sofa bed (100×200 cm). The living room adds two full-sized hanging beds. All kings can split into twins — accommodating up to 9 guests in a range of configurations.',
+      'prop.entera.beds': '5 bed / 4 bath',
+      'prop.entera.desc': 'Norte + Sur together. Rented as one, Casa Entera sleeps 13. Let us know your party\'s needs and we\'ll configure the beds accordingly.',
+      'prop.p2':          'Designed with sustainability in mind: the water system runs on rain catchment, and tropical fruit trees provide organic produce throughout the property. Much of the furniture was handcrafted by local woodworkers from reclaimed materials and naturally fallen timber. Lighting is warm-toned dimmable LED throughout, and the home\'s orientation, windows, and ceiling fans were designed around natural cross-breeze patterns for maximum comfort without air conditioning.',
+      'bocas.headline':   'Diversity is Discovery.',
+      'bocas.p1':         'The beauty of Bocas del Toro is its extraordinary range. Geographically and culturally, there are new discoveries at every turn — spread across five islands, each with its own distinct character, all within a quick boat ride of one another.',
+      'bocas.p2':         'The landscape shifts just as dramatically as the culture. Hills for hiking, mangroves for exploring, pristinely calm white-sand beaches, and others with waves of every size and strength.',
+      'bocas.p3':         'Colón, the main island, pulses with a Latin, Spanish-speaking community — salsa and reggaeton, slow-marinated chicken, rice and beans, habanero heat. Bastimentos, the largest island, is home to an Afro-Caribbean community that speaks Creole, jerk-smokes everything, and lives by reggae and dancehall. Woven throughout is a diverse expat community — European, North and South American, Chinese — whose shops and restaurants add even more to the mix: a charming French bakery, Argentinean and German kitchens, an organic American-style health food store.',
+      'bocas.p4':         'And Bocas doesn\'t stop when the sun goes down. Restaurants feature fire-twirling shows, dive bars serve dollar beers over ping pong and billiards, wine bars and live jazz fill the evenings, and open-air clubs built over the water — complete with trampolines, tightropes, and swings — launch you straight into a midnight swim.',
+      'island.colon':     'The vibrant heart of the archipelago — restaurants, nightlife, and endless Caribbean charm.',
+      'island.bocastown.name': 'Bocas Town',
+      'island.bocastown': 'The colorful waterfront hub of Bocas del Toro, where water taxis connect the islands.',
+      'island.bigcreek':  'Our home village — quiet, unhurried, and full of warmth.',
+      'island.zapatilla': 'Postcard-perfect white sand beaches fringed with swaying palms.',
+      'island.pajaros':   'A lush bird sanctuary rising dramatically from crystal Caribbean waters.',
+      'island.bastimentos':'Raw jungle, indigenous communities, and world-class surf breaks.',
+      'island.archipelago.name': 'The Archipelago',
+      'island.archipelago':'Over 200 islands, islets, and cays waiting to be explored.',
+      'island.ngabe.name':'Ngäbe Culture',
+      'island.ngabe':     'The indigenous Ngäbe-Buglé people bring deep culture and artistry to the islands.',
+      'island.wildlife.name':'Local Wildlife',
+      'island.wildlife':  'Three-toed sloths, poison dart frogs, and sea turtles call these islands home.',
+      'act.surfing':      'Surfing',         'act.surfing.desc':     'World-class waves minutes from your door',
+      'act.snorkeling':   'Snorkeling',      'act.snorkeling.desc':  'Explore vibrant reefs and marine life',
+      'act.deepboarding': 'Deep Boarding',   'act.deepboarding.desc':'Glide through crystal-clear Caribbean waters',
+      'act.sup':          'Stand-Up Paddleboarding','act.sup.desc':  'Cruise the calm waters of the archipelago',
+      'act.kayaking':     'Kayaking',        'act.kayaking.desc':    'Paddle through lush mangroves and hidden coves',
+      'act.fishing':      'Fishing',         'act.fishing.desc':     'World-renowned tarpon and sport fishing',
+      'act.atv':          'ATV Adventures',  'act.atv.desc':         'Explore the jungle trails of Isla Colón',
+      'act.caves':        'Cave Exploration','act.caves.desc':       'Discover hidden grottos and natural wonders',
+      'act.cacao':        'Cacao Tours',     'act.cacao.desc':       'Visit working cacao farms with local families',
+      'act.botanical':    'Botanical Gardens','act.botanical.desc':  'Wander through lush tropical flora',
+      'act.scooter':      'Scooter Rentals', 'act.scooter.desc':     'Explore the island at your own pace',
+      'act.zipline':      'Zip-lining',      'act.zipline.desc':     'Soar through the rainforest canopy',
+      'acts.intro':       'Surfing is a ten-minute walk from the house — the best and most consistent breaks in all of Bocas del Toro are right on your doorstep. Beyond that, the archipelago offers something for everyone.',
+      'acts.water':       'On the Water',
+      'acts.land':        'On Land',
+      'acts.excursions':  'Excursions',
+      'list.sup':         'Paddle Boarding', 'list.freediving':      'Free Diving',
+      'list.scuba':       'Scuba Diving',    'list.yoga':            'Yoga',
+      'list.hiking':      'Hiking',          'list.atv':             'ATV Rentals',
+      'list.dunebuggy':   'Dune Buggy Rentals','list.islandtour':    'Island Excursion Tour',
+      'list.botanical':   'Botanical Garden Tour','list.cacao':       'Cocoa Farm Tour',
+      'list.zipline':     'Zipline Canopy Tour','list.cave':         'Cave Tour',
+      'here.title':       'Getting Here',
+      'here.panama.title':'Via Panama City',
+      'here.panama.desc': 'Fly into Tocumen International Airport. We recommend spending a night in the city — The Canal, Casco Viejo, and the old town are well worth it. We\'re big fans of the <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. From there, take a taxi to Albrook Airport (30 min) and fly <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> direct to Bocas del Toro — about an hour. Grab a taxi from the airport and you\'re at Casa Comunal in 5 minutes.',
+      'here.cr.title':    'Via San José, Costa Rica',
+      'here.cr.desc':     'Fly into Juan Santamaría International Airport in San José, then connect with <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> direct to Bocas del Toro. From the airport, a 5-minute taxi brings you straight to Casa Comunal.',
+      'outreach.title':   'Help Out.',
+      'outreach.p1':      'We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.',
+      'outreach.p2':      'Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.',
+      'outreach.cta':     'Interested in getting involved or learning more about our community programs? We\'d love to hear from you.',
+      'outreach.btn':     'Get in Touch',
+      'bar.text':         'Book directly with us —',
+      'footer.credit':    '©Casa Comunal 2025 — All rights reserved<br>Photos courtesy of Olivier Frei and Maria Mangold',
+    },
+
+    es: {
+      'nav.rental':       'Alquiler Vacacional',
+      'nav.activities':   'Actividades',
+      'nav.getting-here': 'Cómo Llegar',
+      'nav.help-out':     'Ayuda',
+      'hero.book':        'Reservar',
+      'hero.see':         'Ver por Dentro',
+      'badge.featured':   'Publicado en',
+      'badge.superhost':  'Superanfitrión de Airbnb',
+      'about.tagline':    'Casa Comunal es hogar.',
+      'about.p1':         'Ubicada directamente sobre las exuberantes orillas del Caribe, a diez minutos a pie de las mejores olas de Bocas del Toro, esta cálida y acogedora propiedad fue diseñada con respeto por su entorno, con la intención de promover el aprendizaje compartido, la interacción y, sobre todo, la conexión humana. Es un lugar donde los lazos se forjan tan profundamente que benefician a la comunidad local.',
+      'about.p2':         'Este loft modular y de planta abierta frente al océano es ideal para reuniones familiares, vacaciones en grupo y experiencias de aprendizaje cultural. Como propiedad vacacional, puede alquilarse como una gran casa de 5 habitaciones y 4 baños, o como dos residencias separadas: "Casa Norte" (3 hab./2 baños) y "Casa Sur" (2 hab./2 baños). Como espacio para retiros de aprendizaje, la casa dispone de paredes y muebles modulares que pueden reorganizarse para múltiples usos.',
+      'about.p3':         'Nuestra misión es ofrecer a los huéspedes una escapada cómoda e integral con actividades como surf, yoga y muchas aventuras disponibles en el archipiélago bocatoreño, mientras contribuimos al bienestar de la isla y su comunidad local.',
+      'floorplan.title':  'Plano',
+      'prop.headline':    'Dos hogares bajo un mismo techo.<br>Alquila uno o los dos juntos.',
+      'prop.p1':          'Casa Comunal es verdaderamente única en Bocas del Toro. La arquitectura minimalista enmarca amplias vistas del Caribe, y el paisajismo se integra con los árboles originales que rodearon la construcción. La propiedad ocupa 1.213 m² con 56 metros de playa privada, 284 m² de espacio interior y 160 m² adicionales de terraza cubierta. Puede alquilarse como una sola residencia o como dos casas independientes que comparten un acceso central, con paredes deslizantes que se cierran para total privacidad.',
+      'prop.sur.beds':    '2 hab. / 2 baños',
+      'prop.sur.desc':    'Ambas habitaciones tienen baño en suite con bañeras de inmersión. La cocina es el punto fuerte: distribución en esquina con isla, horno y lavavajillas. Capacidad para hasta 5 huéspedes.',
+      'prop.norte.beds':  '3 hab. / 2 baños',
+      'prop.norte.desc':  'La suite principal tiene cama king (200×200 cm) y una bañera de inmersión de gran tamaño. La segunda habitación tiene king; la tercera, un king y un sofá cama individual (100×200 cm). El salón añade dos camas colgantes de tamaño completo. Todas las camas king pueden dividirse en individuales, con capacidad para hasta 9 huéspedes en distintas configuraciones.',
+      'prop.entera.beds': '5 hab. / 4 baños',
+      'prop.entera.desc': 'Norte + Sur juntas. Como Casa Entera, duerme hasta 13 personas. Cuéntanos las necesidades de tu grupo y configuraremos las camas en consecuencia.',
+      'prop.p2':          'Diseñada con la sostenibilidad en mente: el sistema de agua funciona con captación de lluvia, y los árboles frutales tropicales proporcionan productos orgánicos en toda la propiedad. Gran parte del mobiliario fue fabricado a mano por artesanos locales con materiales recuperados y madera caída de forma natural. La iluminación LED regulable de tonos cálidos y la orientación de la casa, las ventanas y los ventiladores de techo fueron diseñados para aprovechar la brisa natural sin necesidad de aire acondicionado.',
+      'bocas.headline':   'La Diversidad es Descubrimiento.',
+      'bocas.p1':         'La belleza de Bocas del Toro radica en su extraordinaria variedad. Geográfica y culturalmente, hay nuevos descubrimientos a cada paso: distribuidos en cinco islas, cada una con su carácter propio, todas a un corto trayecto en lancha.',
+      'bocas.p2':         'El paisaje cambia con la misma intensidad que la cultura. Colinas para hacer senderismo, manglares para explorar, playas de arena blanca de aguas tranquilas y otras con olas de todo tipo y fuerza.',
+      'bocas.p3':         'Colón, la isla principal, vibra con una comunidad latina hispanohablante: salsa y reggaeton, pollo marinado lentamente, arroz con frijoles, picante habanero. Bastimentos, la isla más grande, alberga una comunidad afrocaribeña que habla criollo, ahúma todo a la manera jamaicana y vive al ritmo del reggae y el dancehall. Entretejida en todo esto hay una diversa comunidad de expatriados —europeos, norteamericanos, sudamericanos, chinos— cuyos negocios y restaurantes enriquecen aún más la mezcla.',
+      'bocas.p4':         'Y Bocas no se detiene cuando cae el sol. Los restaurantes ofrecen shows de malabares con fuego, los bares sirven cervezas baratas entre partidas de ping pong y billar, los wine bars y el jazz en vivo llenan las noches, y los clubes al aire libre construidos sobre el agua —con trampolines, cuerdas floja y columpios— te lanzan directo a un baño de medianoche.',
+      'island.colon':     'El corazón vibrante del archipiélago: restaurantes, vida nocturna y un encanto caribeño sin fin.',
+      'island.bocastown.name': 'Bocas Town',
+      'island.bocastown': 'El colorido centro frente al mar de Bocas del Toro, donde los taxis acuáticos conectan las islas.',
+      'island.bigcreek':  'Nuestro pueblo natal: tranquilo, sin prisas y lleno de calidez.',
+      'island.zapatilla': 'Playas de arena blanca perfectas, bordeadas de palmeras meciéndose al viento.',
+      'island.pajaros':   'Un exuberante santuario de aves que se eleva dramáticamente desde las aguas cristalinas del Caribe.',
+      'island.bastimentos':'Selva virgen, comunidades indígenas y olas de clase mundial.',
+      'island.archipelago.name': 'El Archipiélago',
+      'island.archipelago':'Más de 200 islas, islotes y cayos esperando ser explorados.',
+      'island.ngabe.name':'Cultura Ngäbe',
+      'island.ngabe':     'El pueblo indígena Ngäbe-Buglé aporta una profunda cultura y artesanía a las islas.',
+      'island.wildlife.name':'Fauna Local',
+      'island.wildlife':  'Perezosos de tres dedos, ranas venenosas y tortugas marinas llaman hogar a estas islas.',
+      'act.surfing':      'Surf',             'act.surfing.desc':     'Olas de clase mundial a minutos de tu puerta',
+      'act.snorkeling':   'Esnórquel',        'act.snorkeling.desc':  'Explora arrecifes vibrantes y vida marina',
+      'act.deepboarding': 'Deep Boarding',    'act.deepboarding.desc':'Deslízate por las cristalinas aguas del Caribe',
+      'act.sup':          'Stand-Up Paddleboard','act.sup.desc':      'Recorre las aguas tranquilas del archipiélago',
+      'act.kayaking':     'Kayak',            'act.kayaking.desc':    'Rema por exuberantes manglares y calas escondidas',
+      'act.fishing':      'Pesca',            'act.fishing.desc':     'Pesca de tarpon y pesca deportiva de renombre mundial',
+      'act.atv':          'Aventura en ATV',  'act.atv.desc':         'Explora los senderos de la selva de Isla Colón',
+      'act.caves':        'Exploración de Cuevas','act.caves.desc':   'Descubre grutas ocultas y maravillas naturales',
+      'act.cacao':        'Tours de Cacao',   'act.cacao.desc':       'Visita fincas de cacao en funcionamiento con familias locales',
+      'act.botanical':    'Jardines Botánicos','act.botanical.desc':  'Pasea entre la exuberante flora tropical',
+      'act.scooter':      'Alquiler de Scooters','act.scooter.desc':  'Explora la isla a tu propio ritmo',
+      'act.zipline':      'Tirolesa',         'act.zipline.desc':     'Vuela por el dosel del bosque tropical',
+      'acts.intro':       'El surf está a diez minutos a pie de la casa: las mejores y más constantes olas de Bocas del Toro están justo a tu alcance. Más allá, el archipiélago ofrece algo para todos.',
+      'acts.water':       'En el Agua',
+      'acts.land':        'En Tierra',
+      'acts.excursions':  'Excursiones',
+      'list.sup':         'Paddle Surf',      'list.freediving':      'Apnea',
+      'list.scuba':       'Buceo',            'list.yoga':            'Yoga',
+      'list.hiking':      'Senderismo',       'list.atv':             'Alquiler de ATV',
+      'list.dunebuggy':   'Alquiler de Buggy','list.islandtour':      'Tour por las Islas',
+      'list.botanical':   'Tour Jardín Botánico','list.cacao':        'Tour Finca de Cacao',
+      'list.zipline':     'Tour Tirolesa',    'list.cave':            'Tour de Cuevas',
+      'here.title':       'Cómo Llegar',
+      'here.panama.title':'Vía Ciudad de Panamá',
+      'here.panama.desc': 'Vuela al Aeropuerto Internacional de Tocumen. Te recomendamos pasar una noche en la ciudad: el Canal, el Casco Viejo y el centro histórico bien valen la pena. Somos grandes fans del <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. Desde allí, toma un taxi al Aeropuerto de Albrook (30 min) y vuela con <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> directo a Bocas del Toro, en aproximadamente una hora. Un taxi desde el aeropuerto te lleva a Casa Comunal en 5 minutos.',
+      'here.cr.title':    'Vía San José, Costa Rica',
+      'here.cr.desc':     'Vuela al Aeropuerto Internacional Juan Santamaría en San José y conecta con <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> directo a Bocas del Toro. Desde el aeropuerto, un taxi de 5 minutos te lleva directamente a Casa Comunal.',
+      'outreach.title':   'Ayuda.',
+      'outreach.p1':      'Consideramos un honor poder vivir nuestro sueño en estas islas prístinas, y no podríamos lograrlo sin el apoyo de los amables, talentosos y hospitalarios miembros de la comunidad bocatoreña. Por ello, nos comprometemos a reducir nuestro impacto ambiental mientras mejoramos el bienestar de quienes nos rodean.',
+      'outreach.p2':      'Cada año donamos alimentos básicos y colchones a familias necesitadas de nuestra comunidad, y contribuimos a iniciativas de la iglesia local que llevan suministros esenciales a familias indígenas de todo el archipiélago. Pequeños gestos, lo sabemos, pero los hacemos con el corazón lleno y las manos abiertas.',
+      'outreach.cta':     '¿Te interesa participar o conocer más sobre nuestros programas comunitarios? Nos encantaría saber de ti.',
+      'outreach.btn':     'Contáctanos',
+      'bar.text':         'Reserva directamente con nosotros —',
+      'footer.credit':    '©Casa Comunal 2025 — Todos los derechos reservados<br>Fotos cortesía de Olivier Frei y Maria Mangold',
+    },
+
+    fr: {
+      'nav.rental':       'Location de Vacances',
+      'nav.activities':   'Activités',
+      'nav.getting-here': 'Comment Venir',
+      'nav.help-out':     'Bénévoles',
+      'hero.book':        'Réserver',
+      'hero.see':         'Voir l\'Intérieur',
+      'badge.featured':   'Présenté sur',
+      'badge.superhost':  'Superhôte Airbnb',
+      'about.tagline':    'Casa Comunal, c\'est chez soi.',
+      'about.p1':         'Nichée directement sur les rives luxuriantes de la mer des Caraïbes, à dix minutes à pied des meilleures vagues de Bocas del Toro, cette propriété chaleureuse et accueillante a été conçue dans le respect de son environnement, avec l\'intention de favoriser l\'apprentissage partagé, les échanges animés et, par-dessus tout, la connexion humaine. C\'est un lieu où les liens se forgent si profondément qu\'ils bénéficient à toute la communauté locale.',
+      'about.p2':         'Ce loft modulaire en open space face à l\'océan est idéal pour les réunions familiales, les vacances en groupe et les séjours d\'apprentissage culturel. En tant que propriété de vacances, il peut être loué comme une grande maison de 5 chambres et 4 salles de bains, ou comme deux résidences séparées : « Casa Norte » (3 ch./2 sdb) et « Casa Sur » (2 ch./2 sdb). En tant que lieu de retraites, la maison dispose de cloisons et de meubles modulables pouvant être ouverts pour différents usages.',
+      'about.p3':         'Notre mission est d\'offrir à nos hôtes une escapade confortable et complète, intégrant des activités telles que le surf, le yoga et une multitude d\'aventures disponibles dans l\'archipel de Bocas, tout en contribuant au bien-être de l\'île et de sa communauté locale.',
+      'floorplan.title':  'Plan',
+      'prop.headline':    'Deux maisons sous un même toit.<br>Louez l\'une ou les deux ensemble.',
+      'prop.p1':          'Casa Comunal est véritablement unique en son genre à Bocas del Toro. L\'architecture minimaliste encadre de vastes vues sur la mer des Caraïbes, tandis que l\'aménagement paysager s\'harmonise avec les arbres d\'origine autour desquels la maison a été construite. La propriété s\'étend sur 1 213 m² avec 56 mètres de plage privée, 284 m² d\'espace intérieur et 160 m² supplémentaires de terrasse couverte. Elle peut être louée comme une seule grande résidence ou comme deux maisons indépendantes partageant un hall d\'entrée central, avec des cloisons coulissantes qui se ferment pour une intimité totale.',
+      'prop.sur.beds':    '2 ch. / 2 sdb',
+      'prop.sur.desc':    'Les deux chambres disposent de salles de bains attenantes avec baignoires balnéo. La cuisine est le point fort — disposition en angle avec îlot, four et lave-vaisselle. Capacité jusqu\'à 5 personnes.',
+      'prop.norte.beds':  '3 ch. / 2 sdb',
+      'prop.norte.desc':  'La suite principale dispose d\'un lit king (200×200 cm) et d\'une grande baignoire balnéo. La deuxième chambre a un king ; la troisième, un king et un canapé-lit simple (100×200 cm). Le salon ajoute deux lits suspendus de taille normale. Tous les lits king peuvent se séparer en lits simples, pour accueillir jusqu\'à 9 personnes dans diverses configurations.',
+      'prop.entera.beds': '5 ch. / 4 sdb',
+      'prop.entera.desc': 'Norte + Sur réunies. Louée en une seule unité, Casa Entera accueille jusqu\'à 13 personnes. Indiquez-nous les besoins de votre groupe et nous configurerons les lits en conséquence.',
+      'prop.p2':          'Conçue dans une optique de durabilité : le système d\'eau fonctionne à la récupération d\'eau de pluie, et les arbres fruitiers tropicaux fournissent des produits biologiques dans toute la propriété. Une grande partie des meubles a été fabriquée à la main par des artisans locaux à partir de matériaux récupérés et de bois tombé naturellement. L\'éclairage LED à intensité variable en tons chauds, ainsi que l\'orientation de la maison, les fenêtres et les ventilateurs de plafond ont été conçus pour maximiser la ventilation naturelle sans climatisation.',
+      'bocas.headline':   'La Diversité, c\'est la Découverte.',
+      'bocas.p1':         'La beauté de Bocas del Toro réside dans son extraordinaire diversité. Géographiquement et culturellement, il y a de nouvelles découvertes à chaque tournant — réparties sur cinq îles, chacune avec son caractère propre, toutes accessibles en quelques minutes de bateau.',
+      'bocas.p2':         'Le paysage évolue avec autant d\'intensité que la culture. Des collines pour la randonnée, des mangroves à explorer, des plages de sable blanc aux eaux calmes, et d\'autres avec des vagues de toutes tailles et intensités.',
+      'bocas.p3':         'Colón, l\'île principale, vibre au rythme d\'une communauté latine hispanophone — salsa et reggaeton, poulet mariné lentement, riz et haricots, piment habanero. Bastimentos, la plus grande île, abrite une communauté afro-caribéenne qui parle créole, fume tout à la jamaïcaine et vit au rythme du reggae et du dancehall. S\'y mêle une communauté d\'expatriés diversifiée — européens, nord et sud-américains, chinois — dont les boutiques et restaurants enrichissent encore plus la palette locale.',
+      'bocas.p4':         'Et Bocas ne s\'arrête pas au coucher du soleil. Les restaurants proposent des spectacles de jongleurs de feu, les bars servent des bières bon marché autour de parties de ping-pong et de billard, les wine bars et le jazz live animent les soirées, et les clubs en plein air construits sur l\'eau — avec trampolines, cordes et balançoires — vous propulsent directement dans un bain de minuit.',
+      'island.colon':     'Le cœur vibrant de l\'archipel — restaurants, vie nocturne et charme caribéen à l\'infini.',
+      'island.bocastown.name': 'Bocas Town',
+      'island.bocastown': 'Le coloré centre-ville au bord de l\'eau, où les taxis nautiques relient les îles.',
+      'island.bigcreek':  'Notre village natal — calme, sans hâte et plein de chaleur humaine.',
+      'island.zapatilla': 'Des plages de sable blanc dignes d\'une carte postale, bordées de palmiers ondoyants.',
+      'island.pajaros':   'Un luxuriant sanctuaire d\'oiseaux qui s\'élève dramatiquement des eaux cristallines de la Caraïbe.',
+      'island.bastimentos':'Jungle sauvage, communautés indigènes et vagues de classe mondiale.',
+      'island.archipelago.name': 'L\'Archipel',
+      'island.archipelago':'Plus de 200 îles, îlots et cayes à explorer.',
+      'island.ngabe.name':'Culture Ngäbe',
+      'island.ngabe':     'Le peuple indigène Ngäbe-Buglé apporte une culture et un artisanat profonds aux îles.',
+      'island.wildlife.name':'Faune Locale',
+      'island.wildlife':  'Paresseux à trois doigts, grenouilles venimeuses et tortues marines habitent ces îles.',
+      'act.surfing':      'Surf',             'act.surfing.desc':     'Des vagues de classe mondiale à deux pas de chez vous',
+      'act.snorkeling':   'Plongée en Apnée', 'act.snorkeling.desc':  'Explorez des récifs colorés et la vie marine',
+      'act.deepboarding': 'Deep Boarding',    'act.deepboarding.desc':'Glissez dans les eaux cristallines des Caraïbes',
+      'act.sup':          'Stand-Up Paddle',  'act.sup.desc':         'Naviguez sur les eaux calmes de l\'archipel',
+      'act.kayaking':     'Kayak',            'act.kayaking.desc':    'Pagayez dans les mangroves luxuriantes et les criques cachées',
+      'act.fishing':      'Pêche',            'act.fishing.desc':     'Pêche au tarpon et pêche sportive de renommée mondiale',
+      'act.atv':          'Aventures en ATV', 'act.atv.desc':         'Explorez les sentiers de la jungle d\'Isla Colón',
+      'act.caves':        'Exploration de Grottes','act.caves.desc':  'Découvrez des grottes cachées et des merveilles naturelles',
+      'act.cacao':        'Tours Cacao',      'act.cacao.desc':       'Visitez des plantations de cacao avec des familles locales',
+      'act.botanical':    'Jardins Botaniques','act.botanical.desc':  'Flânez parmi la flore tropicale luxuriante',
+      'act.scooter':      'Location de Scooters','act.scooter.desc':  'Explorez l\'île à votre propre rythme',
+      'act.zipline':      'Tyrolienne',       'act.zipline.desc':     'Survolez la canopée de la forêt tropicale',
+      'acts.intro':       'Le surf est à dix minutes à pied de la maison — les meilleures vagues et les plus régulières de Bocas del Toro sont à votre porte. Au-delà, l\'archipel offre quelque chose pour tout le monde.',
+      'acts.water':       'Sur l\'Eau',
+      'acts.land':        'Sur Terre',
+      'acts.excursions':  'Excursions',
+      'list.sup':         'Stand-Up Paddle',  'list.freediving':      'Apnée',
+      'list.scuba':       'Plongée Sous-Marine','list.yoga':          'Yoga',
+      'list.hiking':      'Randonnée',        'list.atv':             'Location d\'ATV',
+      'list.dunebuggy':   'Location de Buggy','list.islandtour':      'Tour des Îles',
+      'list.botanical':   'Tour Jardin Botanique','list.cacao':       'Tour Plantation de Cacao',
+      'list.zipline':     'Tour Tyrolienne',  'list.cave':            'Tour des Grottes',
+      'here.title':       'Comment Venir',
+      'here.panama.title':'Via Panama City',
+      'here.panama.desc': 'Volez jusqu\'à l\'aéroport international de Tocumen. Nous vous recommandons de passer une nuit en ville — le Canal, le Casco Viejo et la vieille ville valent vraiment le détour. Nous aimons beaucoup l\'<a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. De là, prenez un taxi vers l\'aéroport d\'Albrook (30 min) et volez avec <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> directement à Bocas del Toro, en environ une heure. Un taxi depuis l\'aéroport vous amène à Casa Comunal en 5 minutes.',
+      'here.cr.title':    'Via San José, Costa Rica',
+      'here.cr.desc':     'Volez jusqu\'à l\'aéroport international Juan Santamaría à San José, puis prenez une correspondance avec <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> directement à Bocas del Toro. Depuis l\'aéroport, un taxi de 5 minutes vous amène directement à Casa Comunal.',
+      'outreach.title':   'Bénévolat.',
+      'outreach.p1':      'Nous considérons comme un honneur de pouvoir vivre notre rêve dans ces îles préservées, et nous ne pourrions y parvenir sans les membres si gentils, talentueux et hospitaliers de la communauté de Bocas. À ce titre, nous nous efforçons de réduire notre impact environnemental tout en améliorant le bien-être des habitants qui nous entourent.',
+      'outreach.p2':      'Chaque année, nous donnons des denrées alimentaires de base et des matelas à des familles dans le besoin au sein de notre communauté, et nous contribuons aux collectes de l\'église locale qui apportent des fournitures essentielles aux familles indigènes de tout l\'archipel. De petits gestes, certes — mais faits avec un cœur plein et les mains ouvertes.',
+      'outreach.cta':     'Vous souhaitez vous impliquer ou en savoir plus sur nos programmes communautaires ? Nous serions ravis d\'avoir de vos nouvelles.',
+      'outreach.btn':     'Nous Contacter',
+      'bar.text':         'Réservez directement avec nous —',
+      'footer.credit':    '©Casa Comunal 2025 — Tous droits réservés<br>Photos : Olivier Frei et Maria Mangold',
+    }
+  };
+
+  function setLanguage(lang) {
+    if (!translations[lang]) return;
+    const t = translations[lang];
+
+    // Plain text elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    // HTML elements (support <br>, links, etc.)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Update active button state
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.trim().toLowerCase() === lang) btn.classList.add('active');
+    });
+
+    // Persist
+    try { localStorage.setItem('cc_lang', lang); } catch(e) {}
+  }
+
+  // Init from stored preference
+  (function() {
+    let saved = 'en';
+    try { saved = localStorage.getItem('cc_lang') || 'en'; } catch(e) {}
+    if (saved !== 'en') setLanguage(saved);
+  })();
+
   // ── HERO SLIDESHOW ──
   const slides = document.querySelectorAll('.slide');
   const dotsContainer = document.getElementById('dots');
@@ -1930,7 +2243,7 @@
 
 <!-- DIRECT BOOKING BAR -->
 <div class="direct-bar" id="directBar" style="display:none">
-  <p>Book directly with us &mdash;</p>
+  <p data-i18n="bar.text">Book directly with us &mdash;</p>
   <a href="mailto:info@casacomunalpanama.com">info@casacomunalpanama.com</a>
   <button class="direct-bar-dismiss" onclick="document.getElementById('directBar').style.display='none'" aria-label="Dismiss">✕</button>
 </div>
