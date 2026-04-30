@@ -2115,9 +2115,6 @@
       timer = setInterval(() => goto(current + 1), 2500);
     }
 
-    el.addEventListener('mouseenter', () => clearInterval(timer));
-    el.addEventListener('mouseleave', resetTimer);
-
     let tx = 0;
     el.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
     el.addEventListener('touchend', e => {
