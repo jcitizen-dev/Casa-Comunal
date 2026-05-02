@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casa Comunal</title>
+<title>Casa Comunal — Beachfront Vacation Rental, Bocas del Toro, Panamá</title>
+<meta name="description" content="Casa Comunal is a 5-bedroom, 4-bath beachfront home on the Caribbean in Bocas del Toro, Panamá — rentable as two separate residences or one home sleeping 14. Airbnb Superhost.">
+<meta property="og:title" content="Casa Comunal — Beachfront in Bocas del Toro, Panamá">
+<meta property="og:description" content="Five bedrooms. Four bathrooms. 184 ft of private Caribbean beach. Rentable as one home or two.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_03_frei.webp">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -51,7 +58,10 @@
     color: var(--dark);
     text-decoration: none;
     text-transform: uppercase;
+    transition: color 0.2s;
   }
+
+  .nav-logo a:hover { color: var(--accent); }
 
   .nav-links {
     display: flex;
@@ -120,20 +130,51 @@
   .dropdown a:last-child { border-bottom: none; }
   .dropdown a:hover { background: var(--sand); }
 
-  .nav-lang {
+  /* ── LANGUAGE SWITCHER ── */
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-left: 1px solid var(--light-border);
+    padding-left: 1rem;
+    height: 64px;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    font-family: 'Jost', sans-serif;
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--mid);
-    text-decoration: none;
-    padding: 0 1rem;
-    border-left: 1px solid var(--light-border);
-    height: 64px;
-    line-height: 64px;
-    display: block;
+    cursor: pointer;
+    padding: 0 0.35rem;
     transition: color 0.2s;
+    line-height: 1;
   }
-  .nav-lang:hover { color: var(--accent); }
+  .lang-btn:hover { color: var(--dark); }
+  .lang-btn.active { color: var(--dark); font-weight: 500; }
+  .lang-sep {
+    color: var(--light-border);
+    font-size: 0.75rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .mobile-lang-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--light-border);
+  }
+  .mobile-lang-row .lang-btn {
+    font-size: 0.82rem;
+    color: var(--dark);
+    letter-spacing: 0.16em;
+    padding: 0 0.4rem;
+  }
+  .mobile-lang-row .lang-sep { color: var(--light-border); }
 
   /* ── HERO SLIDESHOW ── */
   .hero {
@@ -161,35 +202,136 @@
     object-position: center;
   }
 
-  /* placeholder slides for images not yet provided */
-  .slide-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #c8bfaa 0%, #a89880 50%, #8b7a62 100%);
+  /* ── HERO TEXT OVERLAY ── */
+  .hero-text-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 5;
+    padding: 7rem 4rem 7rem;
+    background: linear-gradient(to top, rgba(10,10,8,0.68) 0%, rgba(10,10,8,0.15) 55%, transparent 100%);
+    pointer-events: none;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
   }
 
-  .slide-placeholder span {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 0.2em;
+
+  .hero-eyebrow-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1rem;
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    pointer-events: all;
+  }
+
+  .hero-btn {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dark);
+    background: white;
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .hero-btn:hover { background: var(--accent); color: white; }
+
+  .hero-btn-ghost {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    background: transparent;
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    border: 1px solid rgba(255,255,255,0.35);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .hero-btn-ghost:hover { border-color: rgba(255,255,255,0.55); color: rgba(255,255,255,0.85); }
+
+  @media (max-width: 600px) {
+    .hero-text-overlay { padding: 5rem 1.75rem max(8rem, calc(env(safe-area-inset-bottom) + 6rem)); }
+    .hero-headline { margin-bottom: 1.5rem; }
+    /* VR carousel has no margin-top (unlike hero's 64px), so subtract 64px from bottom padding */
+    #vrCarousel .hero-text-overlay { padding-bottom: max(4rem, calc(env(safe-area-inset-bottom) + 2rem)); }
   }
 
   .hero-dots {
     position: absolute;
     bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 2rem;
     display: flex;
     gap: 8px;
     z-index: 10;
   }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--dark);
+    padding: 1.1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stats-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.67rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    padding: 0.45rem 2rem;
+    white-space: nowrap;
+  }
+
+  .stat-sep {
+    width: 1px;
+    height: 12px;
+    background: rgba(255,255,255,0.18);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 700px) {
+    .stat { padding: 0.35rem 0.9rem; font-size: 0.62rem; }
+    .stat-sep { display: none; }
+  }
+
+  /* ── PAGE TRANSITIONS ── */
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .page.active { animation: pageIn 0.25s ease; }
 
   /* ── ACTIVITIES LIST ── */
   .activities-list-section {
@@ -504,9 +646,9 @@
     width: auto;
     display: inline-block;
     vertical-align: middle;
+    mix-blend-mode: multiply;
   }
 
-  /* dwell placeholder */
   .dwell-text-badge {
     display: inline-flex;
     align-items: center;
@@ -514,7 +656,10 @@
     border: 1px solid var(--light-border);
     padding: 0.5rem 1.4rem;
     border-radius: 2px;
+    transition: border-color 0.2s;
   }
+
+  .dwell-text-badge:hover { border-color: var(--accent); }
 
   .dwell-text-badge span {
     font-family: 'Cormorant Garamond', serif;
@@ -607,7 +752,7 @@
   footer {
     background: var(--dark);
     color: rgba(255,255,255,0.55);
-    padding: 3rem 2rem;
+    padding: 3rem 2rem 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -708,7 +853,6 @@
   }
 
   /* ── SECTION CAROUSELS ── */
-  /* ── SECTION CAROUSELS — full-screen mobile, natural on desktop ── */
   .section-carousel {
     position: relative;
     width: 100vw;
@@ -719,46 +863,58 @@
     overflow: hidden;
     touch-action: pan-y;
     background: #000;
-    /* desktop: let the image dictate height, up to full screen */
+    height: 85vh;
     max-height: 100vh;
   }
 
-  /* mobile: always full screen */
   @media (max-width: 700px) {
     .section-carousel { height: 100vh; max-height: 100vh; }
   }
 
   .section-carousel-track {
-    display: flex;
+    display: block;
+    position: relative;
+    width: 100%;
     height: 100%;
-    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-    will-change: transform;
   }
 
   .section-carousel-track .carousel-slide {
-    flex: 0 0 100%;
-    width: 100vw;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+
+  .section-carousel-track .carousel-slide.active {
+    opacity: 1;
   }
 
   .section-carousel-track .carousel-slide img {
     width: 100%;
     height: 100%;
-    /* desktop: contain so full photo is visible */
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     display: block;
   }
 
-  /* mobile: cover to fill the screen edge-to-edge */
-  @media (max-width: 700px) {
-    .section-carousel-track .carousel-slide img {
-      object-fit: cover;
-    }
+  /* ── CAROUSEL OVERLAYS ── */
+  .carousel-island-overlay,
+  .carousel-activity-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 5;
+    padding: 5rem 2.5rem 2.5rem;
+    background: linear-gradient(to top, rgba(26,26,24,0.82) 0%, transparent 100%);
+    pointer-events: none;
   }
 
-  /* hide all overlays and captions */
-  .carousel-activity-overlay,
-  .carousel-island-overlay,
+  /* always-visible captions in carousel (override hover-only behavior from card styles) */
+  .carousel-island-overlay .island-caption,
+  .carousel-activity-overlay .activity-desc {
+    opacity: 1;
+    transform: none;
+  }
+
   .outreach-carousel-caption { display: none; }
 
   /* arrows — subtle, desktop only */
@@ -817,8 +973,8 @@
   .islands-section { padding-bottom: 0; }
   .outreach-section .outreach-inner { gap: 0; }
 
-  /* ── VACATION RENTAL GALLERY (old masonry, hidden) ── */
-  .vr-gallery { display: none; }
+  /* VR carousel is clickable */
+  #vrTrack .carousel-slide { cursor: pointer; }
 
   /* Lightbox */
   .lightbox {
@@ -867,6 +1023,12 @@
   .lightbox-prev { left: 0.5rem; }
   .lightbox-next { right: 0.5rem; }
 
+  /* ── ACTIVITIES PAGE HEADER ── */
+  .activities-page-header {
+    background: var(--sand);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+  }
 
   /* ── ACTIVITIES SECTION ── */
   .activities-section {
@@ -896,88 +1058,6 @@
     line-height: 1.2;
   }
 
-  .activities-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 1024px) {
-    .activities-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  @media (max-width: 700px) {
-    .activities-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  }
-
-  @media (max-width: 440px) {
-    .activities-grid { grid-template-columns: 1fr; }
-  }
-
-  .activity-card {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-    cursor: pointer;
-  }
-
-  .activity-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  .activity-card:hover img {
-    transform: scale(1.05);
-  }
-
-  .activity-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(26,26,24,0.72) 0%, rgba(26,26,24,0) 55%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.2rem;
-    transition: background 0.3s;
-  }
-
-  .activity-card:hover .activity-overlay {
-    background: linear-gradient(to top, rgba(26,26,24,0.82) 0%, rgba(26,26,24,0.1) 55%);
-  }
-
-  .activity-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: white;
-    letter-spacing: 0.04em;
-    line-height: 1.2;
-    margin-bottom: 0.3rem;
-  }
-
-  .activity-desc {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.5;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.3s, transform 0.3s;
-  }
-
-  .activity-card:hover .activity-desc {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-
   /* ── OUR ISLANDS SECTION ── */
   .islands-section {
     background: var(--dark);
@@ -991,89 +1071,6 @@
   .islands-section .section-title {
     color: rgba(255,255,255,0.9);
   }
-
-  .islands-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    max-width: 1300px;
-    margin: 0 auto;
-  }
-
-  /* Make first photo span 2 columns for visual interest */
-  .islands-grid .island-card:first-child {
-    grid-column: span 2;
-  }
-
-  @media (max-width: 900px) {
-    .islands-grid { grid-template-columns: repeat(2, 1fr); }
-    .islands-grid .island-card:first-child { grid-column: span 2; }
-  }
-
-  @media (max-width: 560px) {
-    .islands-grid { grid-template-columns: 1fr; }
-    .islands-grid .island-card:first-child { grid-column: span 1; }
-  }
-
-  .island-card {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-  }
-
-  .islands-grid .island-card:first-child {
-    aspect-ratio: 16/9;
-  }
-
-  .island-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    transition: transform 0.6s ease;
-  }
-
-  .island-card:hover img {
-    transform: scale(1.04);
-  }
-
-  .island-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(26,26,24,0.85) 0%, rgba(26,26,24,0.0) 50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.4rem 1.6rem;
-  }
-
-  .island-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-    font-style: italic;
-    color: white;
-    letter-spacing: 0.03em;
-    margin-bottom: 0.35rem;
-  }
-
-  .island-caption {
-    font-size: 0.63rem;
-    letter-spacing: 0.09em;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.6);
-    max-width: 36ch;
-    opacity: 0;
-    transform: translateY(5px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .island-card:hover .island-caption {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
 
   /* ── GETTING HERE SECTION ── */
   .getting-here-section {
@@ -1116,6 +1113,8 @@
     border-top: 1px solid var(--light-border);
     padding-top: 1.4rem;
   }
+
+  .route-prose {
     font-family: 'Jost', sans-serif;
     font-weight: 300;
     font-size: 0.95rem;
@@ -1173,7 +1172,6 @@
 
   .route-steps a:hover { text-decoration: underline; }
 
-
   /* ── COMMUNITY OUTREACH SECTION ── */
   .outreach-section {
     background: var(--white);
@@ -1198,68 +1196,6 @@
     font-weight: 300;
   }
 
-  .outreach-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto;
-    gap: 6px;
-  }
-
-  /* First photo spans full width as hero */
-  .outreach-grid .outreach-card:first-child {
-    grid-column: 1 / -1;
-  }
-
-  @media (max-width: 820px) {
-    .outreach-grid { grid-template-columns: repeat(2, 1fr); }
-    .outreach-grid .outreach-card:first-child { grid-column: 1 / -1; }
-  }
-
-  @media (max-width: 500px) {
-    .outreach-grid { grid-template-columns: 1fr; }
-    .outreach-grid .outreach-card:first-child { grid-column: 1; }
-  }
-
-  .outreach-card {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-  }
-
-  .outreach-grid .outreach-card:first-child {
-    aspect-ratio: 21/8;
-  }
-
-  @media (max-width: 600px) {
-    .outreach-grid .outreach-card:first-child { aspect-ratio: 4/3; }
-  }
-
-  .outreach-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  .outreach-card:hover img { transform: scale(1.04); }
-
-  .outreach-card-caption {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(to top, rgba(26,26,24,0.75), transparent);
-    padding: 1rem 1rem 0.8rem;
-    font-size: 0.63rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .outreach-card:hover .outreach-card-caption { opacity: 1; }
-
   .outreach-cta {
     text-align: center;
     margin-top: 3rem;
@@ -1274,7 +1210,6 @@
     max-width: 520px;
     margin: 0 auto 1.6rem;
   }
-
 
   .booking-direct-link {
     color: var(--dark);
@@ -1311,6 +1246,44 @@
     font-size: 1.2rem;
   }
 
+  /* ── ISLAND CARD STYLES (used by carousel overlays) ── */
+  .island-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: italic;
+    color: white;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.35rem;
+  }
+
+  .island-caption {
+    font-size: 0.63rem;
+    letter-spacing: 0.09em;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+    max-width: 36ch;
+  }
+
+  /* ── ACTIVITY CARD STYLES (used by carousel overlays) ── */
+  .activity-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+  }
+
+  .activity-desc {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+
 </style>
 </head>
 <body>
@@ -1320,12 +1293,18 @@
   <div class="nav-logo"><a href="#" onclick="showPage('home'); return false;">Casa Comunal</a></div>
 
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('rental'); return false;">Vacation Rental</a></li>
+    <li><a href="#" onclick="showPage('rental'); return false;" data-i18n="nav.rental">Vacation Rental</a></li>
     <li><a href="#" onclick="showPage('bocas'); return false;">Bocas del Toro</a></li>
-    <li><a href="#" onclick="showPage('activities'); return false;">Activities</a></li>
-    <li><a href="#" onclick="showPage('getting-here'); return false;">Getting Here</a></li>
-    <li><a href="#" onclick="showPage('outreach'); return false;">Help Out</a></li>
-    <a class="nav-lang" href="#">Español</a>
+    <li><a href="#" onclick="showPage('activities'); return false;" data-i18n="nav.activities">Activities</a></li>
+    <li><a href="#" onclick="showPage('getting-here'); return false;" data-i18n="nav.getting-here">Getting Here</a></li>
+    <li><a href="#" onclick="showPage('outreach'); return false;" data-i18n="nav.help-out">Help Out</a></li>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+    </div>
   </ul>
 
   <div class="hamburger" onclick="toggleMenu()">
@@ -1335,12 +1314,18 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#" onclick="showPage('rental'); toggleMenu(); return false;">Vacation Rental</a>
+  <a href="#" onclick="showPage('rental'); toggleMenu(); return false;" data-i18n="nav.rental">Vacation Rental</a>
   <a href="#" onclick="showPage('bocas'); toggleMenu(); return false;">Bocas del Toro</a>
-  <a href="#" onclick="showPage('activities'); toggleMenu(); return false;">Activities</a>
-  <a href="#" onclick="showPage('getting-here'); toggleMenu(); return false;">Getting Here</a>
-  <a href="#" onclick="showPage('outreach'); toggleMenu(); return false;">Help Out</a>
-  <a href="#" onclick="toggleMenu()">Español</a>
+  <a href="#" onclick="showPage('activities'); toggleMenu(); return false;" data-i18n="nav.activities">Activities</a>
+  <a href="#" onclick="showPage('getting-here'); toggleMenu(); return false;" data-i18n="nav.getting-here">Getting Here</a>
+  <a href="#" onclick="showPage('outreach'); toggleMenu(); return false;" data-i18n="nav.help-out">Help Out</a>
+  <div class="mobile-lang-row">
+    <button class="lang-btn active" onclick="setLanguage('en'); toggleMenu()">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" onclick="setLanguage('es'); toggleMenu()">ES</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" onclick="setLanguage('fr'); toggleMenu()">FR</button>
+  </div>
 </div>
 
 <!-- PAGE: HOME -->
@@ -1349,79 +1334,87 @@
 <!-- HERO SLIDESHOW -->
 <section class="hero" id="hero">
 
+  <!-- 01 casacomunal_03_frei.webp -->
   <div class="slide active">
-    <img src="images/image_01.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_03_frei.webp" alt="casacomunal_03_frei" loading="eager" fetchpriority="high">
   </div>
-
+  <!-- 02 casacomunal_02_frei.webp -->
   <div class="slide">
-    <!-- Replace src with: casacomunal_07_frei.jpg -->
-    <img src="images/image_02.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_02_frei.webp" alt="casacomunal_02_frei" loading="lazy">
   </div>
-
+  <!-- 03 casacomunal_04_frei.webp -->
   <div class="slide">
-    <img src="images/image_03.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_04_frei.webp" alt="casacomunal_04_frei" loading="lazy">
   </div>
-
+  <!-- 04 casacomunal_07_frei.webp -->
   <div class="slide">
-    <img src="images/image_04.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_07_frei.webp" alt="casacomunal_07_frei" loading="lazy">
   </div>
-
+  <!-- 05 casacomunal_01_frei.webp -->
   <div class="slide">
-    <img src="images/image_05.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_01_frei.webp" alt="casacomunal_01_frei" loading="lazy">
   </div>
-
+  <!-- 06 casacomunal_08_ruppen.webp -->
   <div class="slide">
-    <img src="images/image_06.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_08_ruppen.webp" alt="casacomunal_08_ruppen" loading="lazy">
   </div>
-
+  <!-- 07 casacomunal_06_frei.webp -->
   <div class="slide">
-    <img src="images/image_07.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_06_frei.webp" alt="casacomunal_06_frei" loading="lazy">
   </div>
-
+  <!-- 08 _DSC7877.webp -->
   <div class="slide">
-    <img src="images/image_08.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/_DSC7877.webp" alt="_DSC7877" loading="lazy">
   </div>
-
+  <!-- 09 IMG_8684.webp -->
   <div class="slide">
-    <img src="images/image_09.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/IMG_8684.webp" alt="IMG_8684" loading="lazy">
   </div>
-
+  <!-- 10 IMG_8730.webp -->
   <div class="slide">
-    <img src="images/image_10.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/IMG_8730.webp" alt="IMG_8730" loading="lazy">
   </div>
-
+  <!-- 11 IMG_8750.webp -->
   <div class="slide">
-    <img src="images/image_11.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/IMG_8750.webp" alt="IMG_8750" loading="lazy">
   </div>
-
+  <!-- 12 casacomunal_22_ruppen.webp -->
   <div class="slide">
-    <img src="images/image_12.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_22_ruppen.webp" alt="casacomunal_22_ruppen" loading="lazy">
   </div>
-
+  <!-- 13 casacomunal_10_ruppen.webp -->
   <div class="slide">
-    <img src="images/image_13.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/casacomunal_10_ruppen.webp" alt="casacomunal_10_ruppen" loading="lazy">
   </div>
-
+  <!-- 14 IMG_3456.webp -->
   <div class="slide">
-    <img src="images/image_14.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/IMG_3456.webp" alt="IMG_3456" loading="lazy">
   </div>
-
+  <!-- 15 IMG_5182.webp -->
   <div class="slide">
-    <img src="images/image_15.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/IMG_5182.webp" alt="IMG_5182" loading="lazy">
   </div>
-
+  <!-- 16 IMG_8749.webp -->
   <div class="slide">
-    <img src="images/image_16.webp" alt="Casa Comunal" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+    <img src="Casa%20Comunal%20Pics/Casa%20Exterior/IMG_8749.webp" alt="IMG_8749" loading="lazy">
   </div>
 
-  <div class="hero-dots" id="dots"></div>
+  <!-- Hero text overlay -->
+  <div class="hero-text-overlay">
+    <div class="hero-cta-row">
+      <a href="mailto:info@casacomunalpanama.com" class="hero-btn" data-i18n="hero.book">Book Now</a>
+      <a href="#" onclick="showPage('rental'); return false;" class="hero-btn-ghost" data-i18n="hero.see">See Inside</a>
+    </div>
+  </div>
+
 </section>
+
 
 <!-- BADGES -->
 <section class="dwell-section">
   <div class="badges-row">
     <div class="badge-block">
-      <p class="dwell-label">As featured on</p>
+      <p class="dwell-label" data-i18n="badge.featured">As featured on</p>
       <a href="https://www.dwell.com/article/a-community-oriented-vacation-rental-in-panamanian-paradise-0cd6e907" target="_blank" rel="noopener">
         <div class="dwell-text-badge">
           <span>Dwell.com</span>
@@ -1429,21 +1422,21 @@
       </a>
     </div>
     <div class="badge-block">
-      <p class="dwell-label">Airbnb Superhost</p>
-      <img class="superhost-badge" src="images/superhost.webp" alt="Airbnb Superhost">
+      <p class="dwell-label" data-i18n="badge.superhost">Airbnb Superhost</p>
+      <img class="superhost-badge" src="Casa%20Comunal%20Pics/Super.webp" alt="Airbnb Superhost" loading="lazy">
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section class="about" id="vacation">
-  <h1 class="about-tagline">Casa Comunal is home.</h1>
+<section class="about" id="about">
+  <h2 class="about-tagline" data-i18n="about.tagline">Casa Comunal is home.</h2>
 
-  <p>Nestled directly upon the lush shores of the Caribbean and a ten minute walk from the best and most consistent breaks in Bocas del Toro, this warm and inviting space was designed respectfully of its environment with the intent to promote shared learning, spirited interaction and above all, human connection. It is a place where bonds are formed so strongly within that they benefit the local community outside.</p>
+  <p data-i18n="about.p1">Nestled directly upon the lush shores of the Caribbean and a ten minute walk from the best and most consistent breaks in Bocas del Toro, this warm and inviting space was designed respectfully of its environment with the intent to promote shared learning, spirited interaction and above all, human connection. It is a place where bonds are formed so strongly within that they benefit the local community outside.</p>
 
-  <p>This open-plan, modular, oceanfront loft is ideal for family gatherings, group holidays, and cultural learning experiences. As a vacation property, it can be rented as one large 5 bedroom, 4 bathroom house or two separate houses — "Casa Norte" a 3bed/2bath and "Casa Sur" a 2bed/2bath. As a site for Learning Retreats, the home is designed with modular walls and furniture that can be opened and expanded for multiple uses to maximize collaboration, idea-sharing and most of all, a perfect work/play balance.</p>
+  <p data-i18n="about.p2">This open-plan, modular, oceanfront loft is ideal for family gatherings, group holidays, and cultural learning experiences. As a vacation property, it can be rented as one large 5 bedroom, 4 bathroom house or two separate houses — "Casa Norte" a 3bed/2bath and "Casa Sur" a 2bed/2bath. As a site for Learning Retreats, the home is designed with modular walls and furniture that can be opened and expanded for multiple uses to maximize collaboration, idea-sharing and most of all, a perfect work/play balance.</p>
 
-  <p>Our mission is to provide our guests a comfortable, well-rounded getaway integrated with activities such as surfing, yoga and a variety of other adventures available throughout the Bocatoranian archipelago while also giving back to the island and its local community.</p>
+  <p data-i18n="about.p3">Our mission is to provide our guests a comfortable, well-rounded getaway integrated with activities such as surfing, yoga and a variety of other adventures available throughout the Bocatoranian archipelago while also giving back to the island and its local community.</p>
 </section>
 
 </div><!-- end page-home -->
@@ -1455,72 +1448,68 @@
 <div class="vr-carousel-wrap" id="vr-gallery">
   <div class="section-carousel" id="vrCarousel">
     <div class="section-carousel-track" id="vrTrack">
-      <div class="carousel-slide"><img src="images/image_40.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_41.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_42.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_43.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_44.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_45.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_46.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_47.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_48.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_49.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_50.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_51.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_52.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_53.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_54.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_55.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_56.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_57.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_58.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_59.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_60.webp" alt="Casa Comunal interior" loading="lazy"></div>
-      <div class="carousel-slide"><img src="images/image_61.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 01 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_16_ruppen.webp" alt="Casa Comunal interior" loading="eager"></div>
+      <!-- 02 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_11_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 03 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_12_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 04 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_13_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 05 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_14_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 06 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_17_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 07 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8689.webp" alt="Casa Comunal kitchen" loading="lazy"></div>
+      <!-- 08 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_24_ruppen.webp" alt="Casa Comunal living area" loading="lazy"></div>
+      <!-- 09 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8709.jpg" alt="Casa Comunal master suite" loading="lazy"></div>
+      <!-- 10 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_5475.webp" alt="Casa Comunal bedroom" loading="lazy"></div>
+      <!-- 11 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_26_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 12 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8698.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 13 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_5511.webp" alt="Casa Comunal bathroom" loading="lazy"></div>
+      <!-- 14 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_25_ruppen.webp" alt="Casa Comunal open plan" loading="lazy"></div>
+      <!-- 15 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8696.webp" alt="Casa Comunal dining" loading="lazy"></div>
+      <!-- 16 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/casacomunal_23_ruppen.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 17 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8699.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 18 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8767.webp" alt="Casa Comunal interior view" loading="lazy"></div>
+      <!-- 19 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8711.webp" alt="Casa Comunal soaking tub" loading="lazy"></div>
+      <!-- 20 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8735.webp" alt="Casa Comunal bedroom detail" loading="lazy"></div>
+      <!-- 21 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8736.webp" alt="Casa Comunal interior" loading="lazy"></div>
+      <!-- 22 --> <div class="carousel-slide"><img src="Casa%20Comunal%20Pics/Casa%20Interior/IMG_8697.webp" alt="Casa Comunal interior detail" loading="lazy"></div>
     </div>
-    <button class="carousel-arrow prev" onclick="carouselMove('vrCarousel',-1)">&#8249;</button>
-    <button class="carousel-arrow next" onclick="carouselMove('vrCarousel',1)">&#8250;</button>
-    <div class="carousel-dots" id="vrDots"></div>
+    <div class="hero-text-overlay" style="pointer-events:none;">
+      <div class="hero-cta-row">
+        <a href="mailto:info@casacomunalpanama.com" class="hero-btn-ghost" data-i18n="hero.book">Book Now</a>
+      </div>
+    </div>
   </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <span class="lightbox-close" onclick="closeLightbox()">&#215;</span>
-  <span class="lightbox-prev" onclick="lightboxNav(-1)">&#8249;</span>
-  <img id="lightbox-img" src="" alt="">
-  <span class="lightbox-next" onclick="lightboxNav(1)">&#8250;</span>
 </div>
 
 <!-- FLOORPLAN -->
 <section class="floorplan-section">
   <div class="property-desc-inner">
-    <h2 class="property-desc-headline" style="margin-bottom:2rem;">Floorplan</h2>
+    <h2 class="property-desc-headline" style="margin-bottom:2rem;" data-i18n="floorplan.title">Floorplan</h2>
   </div>
-  <img src="images/floorplan.webp" alt="Casa Comunal Floorplan — Casa Norte 3bed/2bath and Casa Sur 2bed/2bath" class="floorplan-img">
+  <img src="Casa%20Comunal%20Pics/Floorplan-%20Modern.jpg" alt="Casa Comunal Floorplan — Casa Norte 3bed/2bath and Casa Sur 2bed/2bath" class="floorplan-img" loading="lazy">
 </section>
 
 <!-- PROPERTY DESCRIPTION -->
 <section class="property-desc-section">
   <div class="property-desc-inner">
-    <h2 class="property-desc-headline">Two homes under one roof.<br>Rent one or both together.</h2>
+    <h2 class="property-desc-headline" data-i18n-html="prop.headline">Two homes under one roof.<br>Rent one or both together.</h2>
 
-    <p>Casa Comunal is truly one of a kind in Bocas del Toro. The minimalist architecture frames expansive Caribbean views while the landscaping works around the original treescapes the home was built among. The property spans 1,213 m² (⅓ acre) with 56 meters (184 ft) of private beachfront, 284 m² (3,050 sq ft) of interior space, and an additional 160 m² (1,722 sq ft) of covered deck. It can be rented as one large home or as two separate residences sharing a central entryway — with sliding walls that lock for complete privacy. Each home has its own private deck, separated by an open atrium.</p>
+    <p data-i18n="prop.p1">Casa Comunal is truly one of a kind in Bocas del Toro. The minimalist architecture frames expansive Caribbean views while the landscaping works around the original treescapes the home was built among. The property spans 1,213 m² (⅓ acre) with 56 meters (184 ft) of private beachfront, 284 m² (3,050 sq ft) of interior space, and an additional 160 m² (1,722 sq ft) of covered deck. It can be rented as one large home or as two separate residences sharing a central entryway — with sliding walls that lock for complete privacy. Each home has its own private deck, separated by an open atrium.</p>
 
     <div class="property-units">
       <div class="property-unit">
-        <h3><a href="https://www.airbnb.com/rooms/8941617" target="_blank" rel="noopener">Casa Norte</a> &mdash; 3 bed / 2 bath</h3>
-        <p>The master suite has a king bed (200×200 cm) and an oversized soaking tub. The second bedroom has a king; the third, a king plus a twin sofa bed (100×200 cm). The living room adds two full-sized hanging beds. All kings split into twins — accommodating up to 9 guests in a range of configurations.</p>
+        <h3><a href="https://www.airbnb.com/rooms/8941652" target="_blank" rel="noopener">Casa Sur</a> &mdash; <span data-i18n="prop.sur.beds">2 bed / 2 bath</span></h3>
+        <p data-i18n="prop.sur.desc">Both bedrooms have ensuite bathrooms with soaking tubs. The kitchen is the standout — a corner layout with island, oven, and dishwasher. Sleeps up to 5 guests.</p>
       </div>
       <div class="property-unit">
-        <h3><a href="https://www.airbnb.com/rooms/8941652" target="_blank" rel="noopener">Casa Sur</a> &mdash; 2 bed / 2 bath</h3>
-        <p>Both bedrooms have ensuite bathrooms with soaking tubs. The kitchen is the standout — a corner layout with island, oven, and dishwasher. Sleeps up to 5 guests.</p>
+        <h3><a href="https://www.airbnb.com/rooms/8941617" target="_blank" rel="noopener">Casa Norte</a> &mdash; <span data-i18n="prop.norte.beds">3 bed / 2 bath</span></h3>
+        <p data-i18n="prop.norte.desc">The master suite has a king bed (200×200 cm) and an oversized soaking tub. The second bedroom has a king; the third, a king plus a twin sofa bed (100×200 cm). The living room adds two full-sized hanging beds. All kings can split into twins — accommodating up to 9 guests in a range of configurations.</p>
+      </div>
+      <div class="property-unit" style="grid-column: 1 / -1; border-top: 1px solid var(--light-border); padding-top: 2rem;">
+        <h3><a href="https://www.airbnb.com/rooms/8941660" target="_blank" rel="noopener">Casa Entera</a> &mdash; <span data-i18n="prop.entera.beds">5 bed / 4 bath</span></h3>
+        <p data-i18n="prop.entera.desc">Norte + Sur together. Rented as one, Casa Entera sleeps 13. Let us know your party's needs and we'll configure the beds accordingly.</p>
       </div>
     </div>
 
-    <p><a href="https://www.airbnb.com/rooms/8941660" target="_blank" rel="noopener">Rented together</a>, Casa Comunal sleeps 14. Let us know your party's needs and we'll configure the beds accordingly.</p>
-
-    <p>Designed with sustainability in mind: the water system runs on rain catchment, and tropical fruit trees provide organic produce throughout the property. Much of the furniture was handcrafted by local woodworkers from reclaimed materials and naturally fallen timber. Lighting is warm-toned dimmable LED throughout, and the home's orientation, windows, and ceiling fans were designed around natural cross-breeze patterns for maximum comfort without air conditioning.</p>
+    <p data-i18n="prop.p2">Designed with sustainability in mind: the water system runs on rain catchment, and tropical fruit trees provide organic produce throughout the property. Much of the furniture was handcrafted by local woodworkers from reclaimed materials and naturally fallen timber. Lighting is warm-toned dimmable LED throughout, and the home's orientation, windows, and ceiling fans were designed around natural cross-breeze patterns for maximum comfort without air conditioning.</p>
   </div>
 </section>
 
@@ -1534,46 +1523,34 @@
   <div class="islands-carousel-wrap">
     <div class="section-carousel" id="islandsCarousel">
       <div class="section-carousel-track" id="islandsTrack">
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_19.webp" alt="Isla Colón" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Isla Colón</div><div class="island-caption">The vibrant heart of the archipelago — restaurants, nightlife, and endless Caribbean charm.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/Bocas-Del-Toro-6023445-smalltabletRetina.webp" alt="Isla Colón" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_20.webp" alt="Bocas Town" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Bocas Town</div><div class="island-caption">The colorful waterfront hub of Bocas del Toro, where water taxis connect the islands.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/bocas_del_toro_dock.webp" alt="Bocas Town" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_21.webp" alt="Big Creek" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Big Creek</div><div class="island-caption">Our home village — quiet, unhurried, and full of warmth.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/Girl+Bike+copy.webp" alt="Big Creek" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_22.webp" alt="Cayo Zapatilla" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Cayo Zapatilla</div><div class="island-caption">Postcard-perfect white sand beaches fringed with swaying palms.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/cayo-zapatillas-bocas-del-toro.webp" alt="Cayo Zapatilla" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_23.webp" alt="Isla de los Pájaros" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Isla de los Pájaros</div><div class="island-caption">A lush bird sanctuary rising dramatically from crystal Caribbean waters.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/Isla-de-los-Pajaros-water.webp" alt="Isla de los Pájaros" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_24.webp" alt="Isla Bastimentos" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Isla Bastimentos</div><div class="island-caption">Raw jungle, indigenous communities, and world-class surf breaks.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/Isla-de-los-Pajaros-water%20(1).webp" alt="Isla Bastimentos" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_25.webp" alt="The Archipelago" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">The Archipelago</div><div class="island-caption">Over 200 islands, islets, and cays waiting to be explored.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/Screen+Shot+2015-08-17+at+5.54.22+PM.webp" alt="The Archipelago" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_26.webp" alt="Ngäbe Culture" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Ngäbe Culture</div><div class="island-caption">The indigenous Ngäbe-Buglé people bring deep culture and artistry to the islands.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/Screen+Shot+2015-08-18+at+1.29.29+PM.webp" alt="Ngäbe Culture" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_27.webp" alt="Local Wildlife" loading="lazy">
-          <div class="carousel-island-overlay"><div class="island-name">Local Wildlife</div><div class="island-caption">Three-toed sloths, poison dart frogs, and sea turtles call these islands home.</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Our%20Islands/sloth-panama.webp" alt="Local Wildlife" loading="lazy">
         </div>
       </div>
-      <button class="carousel-arrow prev" onclick="carouselMove('islandsCarousel',-1)">&#8249;</button>
-      <button class="carousel-arrow next" onclick="carouselMove('islandsCarousel',1)">&#8250;</button>
-      <div class="carousel-dots" id="islandsDots"></div>
     </div>
   </div>
 </section>
@@ -1581,11 +1558,11 @@
 <!-- BOCAS BLURB -->
 <section class="bocas-blurb-section">
   <div class="property-desc-inner">
-    <h2 class="property-desc-headline">Diversity is Discovery.</h2>
-    <p>The beauty of Bocas del Toro is its extraordinary range. Geographically and culturally, there are new discoveries at every turn — spread across five islands, each with its own distinct character, all within a quick boat ride of one another.</p>
-    <p>The landscape shifts just as dramatically as the culture. Hills for hiking, mangroves for exploring, pristinely calm white-sand beaches, and others with waves of every size and strength.</p>
-    <p>Colón, the main island, pulses with a Latin, Spanish-speaking community — salsa and reggaeton, slow-marinated chicken, rice and beans, habanero heat. Bastimentos, the largest island, is home to an Afro-Caribbean community that speaks Creole, jerk-smokes everything, and lives by reggae and dancehall. Woven throughout is a diverse expat community — European, North and South American, Chinese — whose shops and restaurants add even more to the mix: a charming French bakery, Argentinean and German kitchens, an organic American-style health food store.</p>
-    <p>And Bocas doesn't stop when the sun goes down. Restaurants feature fire-twirling shows, dive bars serve dollar beers over ping pong and billiards, wine bars and live jazz fill the evenings, and open-air clubs built over the water — complete with trampolines, tightropes, and swings — launch you straight into a midnight swim.</p>
+    <h2 class="property-desc-headline" data-i18n="bocas.headline">Diversity is Discovery.</h2>
+    <p data-i18n="bocas.p1">The beauty of Bocas del Toro is its extraordinary range. Geographically and culturally, there are new discoveries at every turn — spread across five islands, each with its own distinct character, all within a quick boat ride of one another.</p>
+    <p data-i18n="bocas.p2">The landscape shifts just as dramatically as the culture. Hills for hiking, mangroves for exploring, pristinely calm white-sand beaches, and others with waves of every size and strength.</p>
+    <p data-i18n="bocas.p3">Colón, the main island, pulses with a Latin, Spanish-speaking community — salsa and reggaeton, slow-marinated chicken, rice and beans, habanero heat. Bastimentos, the largest island, is home to an Afro-Caribbean community that speaks Creole, jerk-smokes everything, and lives by reggae and dancehall. Woven throughout is a diverse expat community — European, North and South American, Chinese — whose shops and restaurants add even more to the mix: a charming French bakery, Argentinean and German kitchens, an organic American-style health food store.</p>
+    <p data-i18n="bocas.p4">And Bocas doesn't stop when the sun goes down. Restaurants feature fire-twirling shows, dive bars serve dollar beers over ping pong and billiards, wine bars and live jazz fill the evenings, and open-air clubs built over the water — complete with trampolines, tightropes, and swings — launch you straight into a midnight swim.</p>
   </div>
 </section>
 
@@ -1594,63 +1571,54 @@
 <!-- PAGE: ACTIVITIES -->
 <div class="page" id="page-activities">
 
-<!-- ACTIVITIES -->
+<!-- ACTIVITIES CAROUSEL -->
 <section class="activities-section" id="activities">
   <div class="activities-carousel-wrap">
     <div class="section-carousel" id="activitiesCarousel">
       <div class="section-carousel-track" id="activitiesTrack">
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_28.webp" alt="Surfing" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Surfing</div><div class="activity-desc">World-class waves minutes from your door</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/wide-1000-5.webp" alt="Surfing" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_29.webp" alt="Snorkeling" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Snorkeling</div><div class="activity-desc">Explore vibrant reefs and marine life</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/029050132242202201051201084121157109006134222218.webp" alt="Snorkeling" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_30.webp" alt="Deep Boarding" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Deep Boarding</div><div class="activity-desc">Glide through crystal-clear Caribbean waters</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/deep-boarding-team-experience3.webp" alt="Deep Boarding" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_31.webp" alt="Stand-Up Paddleboarding" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Stand-Up Paddleboarding</div><div class="activity-desc">Cruise the calm waters of the archipelago</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/qualia-stand-up-paddle-boarding.webp" alt="Stand-Up Paddleboarding" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_32.webp" alt="Kayaking" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Kayaking</div><div class="activity-desc">Paddle through lush mangroves and hidden coves</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/IMG_0247+copy.webp" alt="Kayaking" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_33.webp" alt="Fishing" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Fishing</div><div class="activity-desc">World-renowned tarpon and sport fishing</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/tarpon-fishing.webp" alt="Fishing" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_34.webp" alt="ATV Adventures" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">ATV Adventures</div><div class="activity-desc">Explore the jungle trails of Isla Colón</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/vjiel2h.webp" alt="ATV Adventures" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_35.webp" alt="Cave Exploration" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Cave Exploration</div><div class="activity-desc">Discover hidden grottos and natural wonders</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/large.webp" alt="Cave Exploration" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_36.webp" alt="Cacao Tours" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Cacao Tours</div><div class="activity-desc">Visit working cacao farms with local families</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/cosechando_cacao_en_Remolino_Gentileza_Rodrigo_Velaidez_Chocaguan.webp" alt="Cacao Tours" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_37.webp" alt="Botanical Gardens" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Botanical Gardens</div><div class="activity-desc">Wander through lush tropical flora</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/Hawaii_Tropical_Botanical_Gardens_Hawaii.webp" alt="Botanical Gardens" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_38.webp" alt="Scooter Rentals" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Scooter Rentals</div><div class="activity-desc">Explore the island at your own pace</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/Screen+Shot+2015-08-17+at+5.17.46+PM.webp" alt="Scooter Rentals" loading="lazy">
         </div>
-        <div class="carousel-slide" style="position:relative">
-          <img src="images/image_39.webp" alt="Zip-lining" loading="lazy">
-          <div class="carousel-activity-overlay"><div class="activity-label">Zip-lining</div><div class="activity-desc">Soar through the rainforest canopy</div></div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/Screen+Shot+2015-08-17+at+5.32.57+PM.webp" alt="Zip-lining" loading="lazy">
+        </div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/cayo-zapatillas-bocas-del-toro.webp" alt="Island Hopping" loading="lazy">
+        </div>
+        <div class="carousel-slide">
+          <img src="Casa%20Comunal%20Pics/Activities/p1040062-1.webp" alt="Beach Days" loading="lazy">
         </div>
       </div>
-      <button class="carousel-arrow prev" onclick="carouselMove('activitiesCarousel',-1)">&#8249;</button>
-      <button class="carousel-arrow next" onclick="carouselMove('activitiesCarousel',1)">&#8250;</button>
-      <div class="carousel-dots" id="activitiesDots"></div>
     </div>
   </div>
 </section>
@@ -1658,39 +1626,39 @@
 <!-- ACTIVITIES LIST -->
 <section class="activities-list-section">
   <div class="activities-list-inner">
-    <p class="activities-list-intro">Surfing is a ten-minute walk from the house — the best and most consistent breaks in all of Bocas del Toro are right on your doorstep. Beyond that, the archipelago offers something for everyone.</p>
+    <p class="activities-list-intro" data-i18n="acts.intro">Surfing is a ten-minute walk from the house — the best and most consistent breaks in all of Bocas del Toro are right on your doorstep. Beyond that, the archipelago offers something for everyone.</p>
     <div class="activities-columns">
       <div class="activities-col">
-        <h3 class="activities-col-title">On the Water</h3>
+        <h3 class="activities-col-title" data-i18n="acts.water">On the Water</h3>
         <ul>
-          <li>Surfing</li>
-          <li>Paddle Boarding</li>
-          <li>Kayaking</li>
-          <li>Snorkeling</li>
-          <li>Free Diving</li>
-          <li>Deep Boarding</li>
-          <li>Scuba Diving</li>
-          <li>Fishing</li>
+          <li data-i18n="act.surfing">Surfing</li>
+          <li data-i18n="list.sup">Paddle Boarding</li>
+          <li data-i18n="act.kayaking">Kayaking</li>
+          <li data-i18n="act.snorkeling">Snorkeling</li>
+          <li data-i18n="list.freediving">Free Diving</li>
+          <li data-i18n="act.deepboarding">Deep Boarding</li>
+          <li data-i18n="list.scuba">Scuba Diving</li>
+          <li data-i18n="act.fishing">Fishing</li>
         </ul>
       </div>
       <div class="activities-col">
-        <h3 class="activities-col-title">On Land</h3>
+        <h3 class="activities-col-title" data-i18n="acts.land">On Land</h3>
         <ul>
-          <li>Yoga</li>
-          <li>Hiking</li>
-          <li>ATV Rentals</li>
-          <li>Dune Buggy Rentals</li>
-          <li>Scooter Rentals</li>
+          <li data-i18n="list.yoga">Yoga</li>
+          <li data-i18n="list.hiking">Hiking</li>
+          <li data-i18n="list.atv">ATV Rentals</li>
+          <li data-i18n="list.dunebuggy">Dune Buggy Rentals</li>
+          <li data-i18n="act.scooter">Scooter Rentals</li>
         </ul>
       </div>
       <div class="activities-col">
-        <h3 class="activities-col-title">Excursions</h3>
+        <h3 class="activities-col-title" data-i18n="acts.excursions">Excursions</h3>
         <ul>
-          <li>Island Excursion Tour</li>
-          <li>Botanical Garden Tour</li>
-          <li>Cocoa Farm Tour</li>
-          <li>Zipline Canopy Tour</li>
-          <li>Cave Tour</li>
+          <li data-i18n="list.islandtour">Island Excursion Tour</li>
+          <li data-i18n="list.botanical">Botanical Garden Tour</li>
+          <li data-i18n="list.cacao">Cocoa Farm Tour</li>
+          <li data-i18n="list.zipline">Zipline Canopy Tour</li>
+          <li data-i18n="list.cave">Cave Tour</li>
         </ul>
       </div>
     </div>
@@ -1704,19 +1672,16 @@
 
 <!-- GETTING HERE -->
 <section class="getting-here-section" id="getting-here">
-  <div class="section-header" style="text-align:center;">
-        <h2 class="section-title">Getting Here</h2>
-  </div>
   <div class="getting-here-inner">
-    <img class="getting-here-map" src="images/image_18.webp" alt="Map showing routes to Casa Comunal in Bocas del Toro, Panama">
+    <img class="getting-here-map" src="Casa%20Comunal%20Pics/Getting%20Here-%20Modern.jpg" alt="Map showing routes to Casa Comunal in Bocas del Toro, Panama" loading="lazy">
     <div class="getting-here-routes">
       <div class="getting-here-route">
-        <h3 class="route-title">Via Panama City</h3>
-        <p class="route-prose">Fly into Tocumen International Airport. We recommend spending a night in the city — The Canal, Casco Viejo, and the old town are well worth it. We're big fans of the <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. From there, take a taxi to Albrook Airport (30 min) and fly <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> direct to Bocas del Toro — about an hour. Grab a taxi from the airport and you're at Casa Comunal in 5 minutes.</p>
+        <h3 class="route-title" data-i18n="here.panama.title">Via Panama City</h3>
+        <p class="route-prose" data-i18n-html="here.panama.desc">Fly into Tocumen International Airport. We recommend spending a night in the city — The Canal, Casco Viejo, and the old town are well worth it. We're big fans of the <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. From there, take a taxi to Albrook Airport (30 min) and fly <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> direct to Bocas del Toro — about an hour. Grab a taxi from the airport and you're at Casa Comunal in 5 minutes.</p>
       </div>
       <div class="getting-here-route">
-        <h3 class="route-title">Via San José, Costa Rica</h3>
-        <p class="route-prose">Fly into Juan Santamaría International Airport in San José, then connect with <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> direct to Bocas del Toro. From the airport, a 5-minute taxi brings you straight to Casa Comunal.</p>
+        <h3 class="route-title" data-i18n="here.cr.title">Via San José, Costa Rica</h3>
+        <p class="route-prose" data-i18n-html="here.cr.desc">Fly into Juan Santamaría International Airport in San José, then connect with <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> direct to Bocas del Toro. From the airport, a 5-minute taxi brings you straight to Casa Comunal.</p>
       </div>
     </div>
   </div>
@@ -1730,31 +1695,16 @@
 <!-- COMMUNITY OUTREACH -->
 <section class="outreach-section" id="outreach">
   <div class="section-header" style="text-align:center;">
-    <h2 class="section-title">Help Out.</h2>
+    <h2 class="section-title" data-i18n="outreach.title">Help Out.</h2>
   </div>
   <div class="outreach-inner">
     <div class="outreach-intro">
-      <p>We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.</p>
-      <p style="margin-top:1rem;">Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.</p>
-    </div>
-    <div class="outreach-carousel-wrap">
-      <div class="section-carousel" id="outreachCarousel">
-        <div class="section-carousel-track" id="outreachTrack">
-          <div class="carousel-slide"><img src="images/image_62.webp" alt="Community gathering by the waterfront" loading="lazy"></div>
-          <div class="carousel-slide"><img src="images/image_63.webp" alt="Working alongside the local community" loading="lazy"></div>
-          <div class="carousel-slide"><img src="images/image_64.webp" alt="Surf program circle on the beach" loading="lazy"></div>
-          <div class="carousel-slide"><img src="images/image_65.webp" alt="Local kids at the surf program" loading="lazy"></div>
-          <div class="carousel-slide"><img src="images/image_66.webp" alt="Beach and island clean-up initiatives" loading="lazy"></div>
-          <div class="carousel-slide"><img src="images/image_67.webp" alt="Clean water access for local families" loading="lazy"></div>
-        </div>
-        <button class="carousel-arrow prev" onclick="carouselMove('outreachCarousel',-1)">&#8249;</button>
-        <button class="carousel-arrow next" onclick="carouselMove('outreachCarousel',1)">&#8250;</button>
-        <div class="carousel-dots" id="outreachDots"></div>
+      <p data-i18n="outreach.p1">We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.</p>
+      <p style="margin-top:1rem;" data-i18n="outreach.p2">Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.</p>
+      <p style="margin-top:1rem;" data-i18n="outreach.cta">Interested in getting involved or learning more about our community programs? We'd love to hear from you.</p>
+      <div style="margin-top:1.6rem;">
+        <a class="booking-link" href="mailto:info@casacomunalpanama.com" data-i18n="outreach.btn">Get in Touch</a>
       </div>
-    </div>
-    <div class="outreach-cta">
-      <p>Interested in getting involved or learning more about our community programs? We'd love to hear from you.</p>
-      <a class="booking-link" href="mailto:info@casacomunalpanama.com">Get in Touch</a>
     </div>
   </div>
 </section>
@@ -1763,51 +1713,310 @@
 
 <!-- FOOTER -->
 <footer>
-
   <p>Big Creek, Isla Colón<br>Bocas Del Toro, Panamá</p>
   <p><a href="mailto:info@casacomunalpanama.com">info@casacomunalpanama.com</a></p>
   <div class="footer-divider"></div>
-  <p class="footer-credit">©Casa Comunal 2015 — All rights reserved<br>Photos courtesy of Olivier Frei and Maria Mangold</p>
+  <p class="footer-credit" data-i18n-html="footer.credit">©Casa Comunal 2025 — All rights reserved<br>Photos courtesy of Olivier Frei and Maria Mangold</p>
 </footer>
 
 <script>
-  // Slideshow
+  // ── TRANSLATIONS ──
+  const translations = {
+    en: {
+      'nav.rental':       'Vacation Rental',
+      'nav.activities':   'Activities',
+      'nav.getting-here': 'Getting Here',
+      'nav.help-out':     'Help Out',
+      'hero.book':        'Book Now',
+      'hero.see':         'See Inside',
+      'badge.featured':   'As featured on',
+      'badge.superhost':  'Airbnb Superhost',
+      'about.tagline':    'Casa Comunal is home.',
+      'about.p1':         'Nestled directly upon the lush shores of the Caribbean and a ten minute walk from the best and most consistent breaks in Bocas del Toro, this warm and inviting space was designed respectfully of its environment with the intent to promote shared learning, spirited interaction and above all, human connection. It is a place where bonds are formed so strongly within that they benefit the local community outside.',
+      'about.p2':         'This open-plan, modular, oceanfront loft is ideal for family gatherings, group holidays, and cultural learning experiences. As a vacation property, it can be rented as one large 5 bedroom, 4 bathroom house or two separate houses — "Casa Norte" a 3bed/2bath and "Casa Sur" a 2bed/2bath. As a site for Learning Retreats, the home is designed with modular walls and furniture that can be opened and expanded for multiple uses to maximize collaboration, idea-sharing and most of all, a perfect work/play balance.',
+      'about.p3':         'Our mission is to provide our guests a comfortable, well-rounded getaway integrated with activities such as surfing, yoga and a variety of other adventures available throughout the Bocatoranian archipelago while also giving back to the island and its local community.',
+      'floorplan.title':  'Floorplan',
+      'prop.headline':    'Two homes under one roof.<br>Rent one or both together.',
+      'prop.p1':          'Casa Comunal is truly one of a kind in Bocas del Toro. The minimalist architecture frames expansive Caribbean views while the landscaping works around the original treescapes the home was built among. The property spans 1,213 m² (⅓ acre) with 56 meters (184 ft) of private beachfront, 284 m² (3,050 sq ft) of interior space, and an additional 160 m² (1,722 sq ft) of covered deck. It can be rented as one large home or as two separate residences sharing a central entryway — with sliding walls that lock for complete privacy. Each home has its own private deck, separated by an open atrium.',
+      'prop.sur.beds':    '2 bed / 2 bath',
+      'prop.sur.desc':    'Both bedrooms have ensuite bathrooms with soaking tubs. The kitchen is the standout — a corner layout with island, oven, and dishwasher. Sleeps up to 5 guests.',
+      'prop.norte.beds':  '3 bed / 2 bath',
+      'prop.norte.desc':  'The master suite has a king bed (200×200 cm) and an oversized soaking tub. The second bedroom has a king; the third, a king plus a twin sofa bed (100×200 cm). The living room adds two full-sized hanging beds. All kings can split into twins — accommodating up to 9 guests in a range of configurations.',
+      'prop.entera.beds': '5 bed / 4 bath',
+      'prop.entera.desc': 'Norte + Sur together. Rented as one, Casa Entera sleeps 13. Let us know your party\'s needs and we\'ll configure the beds accordingly.',
+      'prop.p2':          'Designed with sustainability in mind: the water system runs on rain catchment, and tropical fruit trees provide organic produce throughout the property. Much of the furniture was handcrafted by local woodworkers from reclaimed materials and naturally fallen timber. Lighting is warm-toned dimmable LED throughout, and the home\'s orientation, windows, and ceiling fans were designed around natural cross-breeze patterns for maximum comfort without air conditioning.',
+      'bocas.headline':   'Diversity is Discovery.',
+      'bocas.p1':         'The beauty of Bocas del Toro is its extraordinary range. Geographically and culturally, there are new discoveries at every turn — spread across five islands, each with its own distinct character, all within a quick boat ride of one another.',
+      'bocas.p2':         'The landscape shifts just as dramatically as the culture. Hills for hiking, mangroves for exploring, pristinely calm white-sand beaches, and others with waves of every size and strength.',
+      'bocas.p3':         'Colón, the main island, pulses with a Latin, Spanish-speaking community — salsa and reggaeton, slow-marinated chicken, rice and beans, habanero heat. Bastimentos, the largest island, is home to an Afro-Caribbean community that speaks Creole, jerk-smokes everything, and lives by reggae and dancehall. Woven throughout is a diverse expat community — European, North and South American, Chinese — whose shops and restaurants add even more to the mix: a charming French bakery, Argentinean and German kitchens, an organic American-style health food store.',
+      'bocas.p4':         'And Bocas doesn\'t stop when the sun goes down. Restaurants feature fire-twirling shows, dive bars serve dollar beers over ping pong and billiards, wine bars and live jazz fill the evenings, and open-air clubs built over the water — complete with trampolines, tightropes, and swings — launch you straight into a midnight swim.',
+      'island.colon':     'The vibrant heart of the archipelago — restaurants, nightlife, and endless Caribbean charm.',
+      'island.bocastown.name': 'Bocas Town',
+      'island.bocastown': 'The colorful waterfront hub of Bocas del Toro, where water taxis connect the islands.',
+      'island.bigcreek':  'Our home village — quiet, unhurried, and full of warmth.',
+      'island.zapatilla': 'Postcard-perfect white sand beaches fringed with swaying palms.',
+      'island.pajaros':   'A lush bird sanctuary rising dramatically from crystal Caribbean waters.',
+      'island.bastimentos':'Raw jungle, indigenous communities, and world-class surf breaks.',
+      'island.archipelago.name': 'The Archipelago',
+      'island.archipelago':'Over 200 islands, islets, and cays waiting to be explored.',
+      'island.ngabe.name':'Ngäbe Culture',
+      'island.ngabe':     'The indigenous Ngäbe-Buglé people bring deep culture and artistry to the islands.',
+      'island.wildlife.name':'Local Wildlife',
+      'island.wildlife':  'Three-toed sloths, poison dart frogs, and sea turtles call these islands home.',
+      'act.surfing':      'Surfing',         'act.surfing.desc':     'World-class waves minutes from your door',
+      'act.snorkeling':   'Snorkeling',      'act.snorkeling.desc':  'Explore vibrant reefs and marine life',
+      'act.deepboarding': 'Deep Boarding',   'act.deepboarding.desc':'Glide through crystal-clear Caribbean waters',
+      'act.sup':          'Stand-Up Paddleboarding','act.sup.desc':  'Cruise the calm waters of the archipelago',
+      'act.kayaking':     'Kayaking',        'act.kayaking.desc':    'Paddle through lush mangroves and hidden coves',
+      'act.fishing':      'Fishing',         'act.fishing.desc':     'World-renowned tarpon and sport fishing',
+      'act.atv':          'ATV Adventures',  'act.atv.desc':         'Explore the jungle trails of Isla Colón',
+      'act.caves':        'Cave Exploration','act.caves.desc':       'Discover hidden grottos and natural wonders',
+      'act.cacao':        'Cacao Tours',     'act.cacao.desc':       'Visit working cacao farms with local families',
+      'act.botanical':    'Botanical Gardens','act.botanical.desc':  'Wander through lush tropical flora',
+      'act.scooter':      'Scooter Rentals', 'act.scooter.desc':     'Explore the island at your own pace',
+      'act.zipline':      'Zip-lining',      'act.zipline.desc':     'Soar through the rainforest canopy',
+      'act.islands':      'Island Hopping',  'act.islands.desc':     'Explore the stunning cays of the archipelago',
+      'act.beach':        'Beach Days',      'act.beach.desc':       'Miles of white sand and Caribbean blue',
+      'acts.intro':       'Surfing is a ten-minute walk from the house — the best and most consistent breaks in all of Bocas del Toro are right on your doorstep. Beyond that, the archipelago offers something for everyone.',
+      'acts.water':       'On the Water',
+      'acts.land':        'On Land',
+      'acts.excursions':  'Excursions',
+      'list.sup':         'Paddle Boarding', 'list.freediving':      'Free Diving',
+      'list.scuba':       'Scuba Diving',    'list.yoga':            'Yoga',
+      'list.hiking':      'Hiking',          'list.atv':             'ATV Rentals',
+      'list.dunebuggy':   'Dune Buggy Rentals','list.islandtour':    'Island Excursion Tour',
+      'list.botanical':   'Botanical Garden Tour','list.cacao':       'Cocoa Farm Tour',
+      'list.zipline':     'Zipline Canopy Tour','list.cave':         'Cave Tour',
+      'here.title':       'Getting Here',
+      'here.panama.title':'Via Panama City',
+      'here.panama.desc': 'Fly into Tocumen International Airport. We recommend spending a night in the city — The Canal, Casco Viejo, and the old town are well worth it. We\'re big fans of the <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. From there, take a taxi to Albrook Airport (30 min) and fly <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> direct to Bocas del Toro — about an hour. Grab a taxi from the airport and you\'re at Casa Comunal in 5 minutes.',
+      'here.cr.title':    'Via San José, Costa Rica',
+      'here.cr.desc':     'Fly into Juan Santamaría International Airport in San José, then connect with <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> direct to Bocas del Toro. From the airport, a 5-minute taxi brings you straight to Casa Comunal.',
+      'outreach.title':   'Help Out.',
+      'outreach.p1':      'We view it as an honor to be able to live our dream in these pristine islands and we could not do it without some very kind, talented and hospitable members of the Bocatoranian community. As such, we intend to reduce our impact environmentally while increasing the general welfare of the locals around us.',
+      'outreach.p2':      'Each year we donate food staples and mattresses to families in need within our community, and contribute to local church drives that bring essential supplies to indigenous families throughout the archipelago. Small gestures, we know — but ones we make with full hearts and open hands.',
+      'outreach.cta':     'Interested in getting involved or learning more about our community programs? We\'d love to hear from you.',
+      'outreach.btn':     'Get in Touch',
+      'bar.text':         'Book directly with us —',
+      'footer.credit':    '©Casa Comunal 2025 — All rights reserved<br>Photos courtesy of Olivier Frei and Maria Mangold',
+    },
+
+    es: {
+      'nav.rental':       'Alquiler Vacacional',
+      'nav.activities':   'Actividades',
+      'nav.getting-here': 'Cómo Llegar',
+      'nav.help-out':     'Ayuda',
+      'hero.book':        'Reservar',
+      'hero.see':         'Ver por Dentro',
+      'badge.featured':   'Publicado en',
+      'badge.superhost':  'Superanfitrión de Airbnb',
+      'about.tagline':    'Casa Comunal es hogar.',
+      'about.p1':         'Ubicada directamente sobre las exuberantes orillas del Caribe, a diez minutos a pie de las mejores olas de Bocas del Toro, esta cálida y acogedora propiedad fue diseñada con respeto por su entorno, con la intención de promover el aprendizaje compartido, la interacción y, sobre todo, la conexión humana. Es un lugar donde los lazos se forjan tan profundamente que benefician a la comunidad local.',
+      'about.p2':         'Este loft modular y de planta abierta frente al océano es ideal para reuniones familiares, vacaciones en grupo y experiencias de aprendizaje cultural. Como propiedad vacacional, puede alquilarse como una gran casa de 5 habitaciones y 4 baños, o como dos residencias separadas: "Casa Norte" (3 hab./2 baños) y "Casa Sur" (2 hab./2 baños). Como espacio para retiros de aprendizaje, la casa dispone de paredes y muebles modulares que pueden reorganizarse para múltiples usos.',
+      'about.p3':         'Nuestra misión es ofrecer a los huéspedes una escapada cómoda e integral con actividades como surf, yoga y muchas aventuras disponibles en el archipiélago bocatoreño, mientras contribuimos al bienestar de la isla y su comunidad local.',
+      'floorplan.title':  'Plano',
+      'prop.headline':    'Dos hogares bajo un mismo techo.<br>Alquila uno o los dos juntos.',
+      'prop.p1':          'Casa Comunal es verdaderamente única en Bocas del Toro. La arquitectura minimalista enmarca amplias vistas del Caribe, y el paisajismo se integra con los árboles originales que rodearon la construcción. La propiedad ocupa 1.213 m² con 56 metros de playa privada, 284 m² de espacio interior y 160 m² adicionales de terraza cubierta. Puede alquilarse como una sola residencia o como dos casas independientes que comparten un acceso central, con paredes deslizantes que se cierran para total privacidad.',
+      'prop.sur.beds':    '2 hab. / 2 baños',
+      'prop.sur.desc':    'Ambas habitaciones tienen baño en suite con bañeras de inmersión. La cocina es el punto fuerte: distribución en esquina con isla, horno y lavavajillas. Capacidad para hasta 5 huéspedes.',
+      'prop.norte.beds':  '3 hab. / 2 baños',
+      'prop.norte.desc':  'La suite principal tiene cama king (200×200 cm) y una bañera de inmersión de gran tamaño. La segunda habitación tiene king; la tercera, un king y un sofá cama individual (100×200 cm). El salón añade dos camas colgantes de tamaño completo. Todas las camas king pueden dividirse en individuales, con capacidad para hasta 9 huéspedes en distintas configuraciones.',
+      'prop.entera.beds': '5 hab. / 4 baños',
+      'prop.entera.desc': 'Norte + Sur juntas. Como Casa Entera, duerme hasta 13 personas. Cuéntanos las necesidades de tu grupo y configuraremos las camas en consecuencia.',
+      'prop.p2':          'Diseñada con la sostenibilidad en mente: el sistema de agua funciona con captación de lluvia, y los árboles frutales tropicales proporcionan productos orgánicos en toda la propiedad. Gran parte del mobiliario fue fabricado a mano por artesanos locales con materiales recuperados y madera caída de forma natural. La iluminación LED regulable de tonos cálidos y la orientación de la casa, las ventanas y los ventiladores de techo fueron diseñados para aprovechar la brisa natural sin necesidad de aire acondicionado.',
+      'bocas.headline':   'La Diversidad es Descubrimiento.',
+      'bocas.p1':         'La belleza de Bocas del Toro radica en su extraordinaria variedad. Geográfica y culturalmente, hay nuevos descubrimientos a cada paso: distribuidos en cinco islas, cada una con su carácter propio, todas a un corto trayecto en lancha.',
+      'bocas.p2':         'El paisaje cambia con la misma intensidad que la cultura. Colinas para hacer senderismo, manglares para explorar, playas de arena blanca de aguas tranquilas y otras con olas de todo tipo y fuerza.',
+      'bocas.p3':         'Colón, la isla principal, vibra con una comunidad latina hispanohablante: salsa y reggaeton, pollo marinado lentamente, arroz con frijoles, picante habanero. Bastimentos, la isla más grande, alberga una comunidad afrocaribeña que habla criollo, ahúma todo a la manera jamaicana y vive al ritmo del reggae y el dancehall. Entretejida en todo esto hay una diversa comunidad de expatriados —europeos, norteamericanos, sudamericanos, chinos— cuyos negocios y restaurantes enriquecen aún más la mezcla.',
+      'bocas.p4':         'Y Bocas no se detiene cuando cae el sol. Los restaurantes ofrecen shows de malabares con fuego, los bares sirven cervezas baratas entre partidas de ping pong y billar, los wine bars y el jazz en vivo llenan las noches, y los clubes al aire libre construidos sobre el agua —con trampolines, cuerdas floja y columpios— te lanzan directo a un baño de medianoche.',
+      'island.colon':     'El corazón vibrante del archipiélago: restaurantes, vida nocturna y un encanto caribeño sin fin.',
+      'island.bocastown.name': 'Bocas Town',
+      'island.bocastown': 'El colorido centro frente al mar de Bocas del Toro, donde los taxis acuáticos conectan las islas.',
+      'island.bigcreek':  'Nuestro pueblo natal: tranquilo, sin prisas y lleno de calidez.',
+      'island.zapatilla': 'Playas de arena blanca perfectas, bordeadas de palmeras meciéndose al viento.',
+      'island.pajaros':   'Un exuberante santuario de aves que se eleva dramáticamente desde las aguas cristalinas del Caribe.',
+      'island.bastimentos':'Selva virgen, comunidades indígenas y olas de clase mundial.',
+      'island.archipelago.name': 'El Archipiélago',
+      'island.archipelago':'Más de 200 islas, islotes y cayos esperando ser explorados.',
+      'island.ngabe.name':'Cultura Ngäbe',
+      'island.ngabe':     'El pueblo indígena Ngäbe-Buglé aporta una profunda cultura y artesanía a las islas.',
+      'island.wildlife.name':'Fauna Local',
+      'island.wildlife':  'Perezosos de tres dedos, ranas venenosas y tortugas marinas llaman hogar a estas islas.',
+      'act.surfing':      'Surf',             'act.surfing.desc':     'Olas de clase mundial a minutos de tu puerta',
+      'act.snorkeling':   'Esnórquel',        'act.snorkeling.desc':  'Explora arrecifes vibrantes y vida marina',
+      'act.deepboarding': 'Deep Boarding',    'act.deepboarding.desc':'Deslízate por las cristalinas aguas del Caribe',
+      'act.sup':          'Stand-Up Paddleboard','act.sup.desc':      'Recorre las aguas tranquilas del archipiélago',
+      'act.kayaking':     'Kayak',            'act.kayaking.desc':    'Rema por exuberantes manglares y calas escondidas',
+      'act.fishing':      'Pesca',            'act.fishing.desc':     'Pesca de tarpon y pesca deportiva de renombre mundial',
+      'act.atv':          'Aventura en ATV',  'act.atv.desc':         'Explora los senderos de la selva de Isla Colón',
+      'act.caves':        'Exploración de Cuevas','act.caves.desc':   'Descubre grutas ocultas y maravillas naturales',
+      'act.cacao':        'Tours de Cacao',   'act.cacao.desc':       'Visita fincas de cacao en funcionamiento con familias locales',
+      'act.botanical':    'Jardines Botánicos','act.botanical.desc':  'Pasea entre la exuberante flora tropical',
+      'act.scooter':      'Alquiler de Scooters','act.scooter.desc':  'Explora la isla a tu propio ritmo',
+      'act.zipline':      'Tirolesa',         'act.zipline.desc':     'Vuela por el dosel del bosque tropical',
+      'act.islands':      'Salto de Islas',  'act.islands.desc':     'Explora los impresionantes cayos del archipiélago',
+      'act.beach':        'Días de Playa',   'act.beach.desc':       'Kilómetros de arena blanca y azul caribeño',
+      'acts.intro':       'El surf está a diez minutos a pie de la casa: las mejores y más constantes olas de Bocas del Toro están justo a tu alcance. Más allá, el archipiélago ofrece algo para todos.',
+      'acts.water':       'En el Agua',
+      'acts.land':        'En Tierra',
+      'acts.excursions':  'Excursiones',
+      'list.sup':         'Paddle Surf',      'list.freediving':      'Apnea',
+      'list.scuba':       'Buceo',            'list.yoga':            'Yoga',
+      'list.hiking':      'Senderismo',       'list.atv':             'Alquiler de ATV',
+      'list.dunebuggy':   'Alquiler de Buggy','list.islandtour':      'Tour por las Islas',
+      'list.botanical':   'Tour Jardín Botánico','list.cacao':        'Tour Finca de Cacao',
+      'list.zipline':     'Tour Tirolesa',    'list.cave':            'Tour de Cuevas',
+      'here.title':       'Cómo Llegar',
+      'here.panama.title':'Vía Ciudad de Panamá',
+      'here.panama.desc': 'Vuela al Aeropuerto Internacional de Tocumen. Te recomendamos pasar una noche en la ciudad: el Canal, el Casco Viejo y el centro histórico bien valen la pena. Somos grandes fans del <a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. Desde allí, toma un taxi al Aeropuerto de Albrook (30 min) y vuela con <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> directo a Bocas del Toro, en aproximadamente una hora. Un taxi desde el aeropuerto te lleva a Casa Comunal en 5 minutos.',
+      'here.cr.title':    'Vía San José, Costa Rica',
+      'here.cr.desc':     'Vuela al Aeropuerto Internacional Juan Santamaría en San José y conecta con <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> directo a Bocas del Toro. Desde el aeropuerto, un taxi de 5 minutos te lleva directamente a Casa Comunal.',
+      'outreach.title':   'Ayuda.',
+      'outreach.p1':      'Consideramos un honor poder vivir nuestro sueño en estas islas prístinas, y no podríamos lograrlo sin el apoyo de los amables, talentosos y hospitalarios miembros de la comunidad bocatoreña. Por ello, nos comprometemos a reducir nuestro impacto ambiental mientras mejoramos el bienestar de quienes nos rodean.',
+      'outreach.p2':      'Cada año donamos alimentos básicos y colchones a familias necesitadas de nuestra comunidad, y contribuimos a iniciativas de la iglesia local que llevan suministros esenciales a familias indígenas de todo el archipiélago. Pequeños gestos, lo sabemos, pero los hacemos con el corazón lleno y las manos abiertas.',
+      'outreach.cta':     '¿Te interesa participar o conocer más sobre nuestros programas comunitarios? Nos encantaría saber de ti.',
+      'outreach.btn':     'Contáctanos',
+      'bar.text':         'Reserva directamente con nosotros —',
+      'footer.credit':    '©Casa Comunal 2025 — Todos los derechos reservados<br>Fotos cortesía de Olivier Frei y Maria Mangold',
+    },
+
+    fr: {
+      'nav.rental':       'Location de Vacances',
+      'nav.activities':   'Activités',
+      'nav.getting-here': 'Comment Venir',
+      'nav.help-out':     'Bénévoles',
+      'hero.book':        'Réserver',
+      'hero.see':         'Voir l\'Intérieur',
+      'badge.featured':   'Présenté sur',
+      'badge.superhost':  'Superhôte Airbnb',
+      'about.tagline':    'Casa Comunal, c\'est chez soi.',
+      'about.p1':         'Nichée directement sur les rives luxuriantes de la mer des Caraïbes, à dix minutes à pied des meilleures vagues de Bocas del Toro, cette propriété chaleureuse et accueillante a été conçue dans le respect de son environnement, avec l\'intention de favoriser l\'apprentissage partagé, les échanges animés et, par-dessus tout, la connexion humaine. C\'est un lieu où les liens se forgent si profondément qu\'ils bénéficient à toute la communauté locale.',
+      'about.p2':         'Ce loft modulaire en open space face à l\'océan est idéal pour les réunions familiales, les vacances en groupe et les séjours d\'apprentissage culturel. En tant que propriété de vacances, il peut être loué comme une grande maison de 5 chambres et 4 salles de bains, ou comme deux résidences séparées : « Casa Norte » (3 ch./2 sdb) et « Casa Sur » (2 ch./2 sdb). En tant que lieu de retraites, la maison dispose de cloisons et de meubles modulables pouvant être ouverts pour différents usages.',
+      'about.p3':         'Notre mission est d\'offrir à nos hôtes une escapade confortable et complète, intégrant des activités telles que le surf, le yoga et une multitude d\'aventures disponibles dans l\'archipel de Bocas, tout en contribuant au bien-être de l\'île et de sa communauté locale.',
+      'floorplan.title':  'Plan',
+      'prop.headline':    'Deux maisons sous un même toit.<br>Louez l\'une ou les deux ensemble.',
+      'prop.p1':          'Casa Comunal est véritablement unique en son genre à Bocas del Toro. L\'architecture minimaliste encadre de vastes vues sur la mer des Caraïbes, tandis que l\'aménagement paysager s\'harmonise avec les arbres d\'origine autour desquels la maison a été construite. La propriété s\'étend sur 1 213 m² avec 56 mètres de plage privée, 284 m² d\'espace intérieur et 160 m² supplémentaires de terrasse couverte. Elle peut être louée comme une seule grande résidence ou comme deux maisons indépendantes partageant un hall d\'entrée central, avec des cloisons coulissantes qui se ferment pour une intimité totale.',
+      'prop.sur.beds':    '2 ch. / 2 sdb',
+      'prop.sur.desc':    'Les deux chambres disposent de salles de bains attenantes avec baignoires balnéo. La cuisine est le point fort — disposition en angle avec îlot, four et lave-vaisselle. Capacité jusqu\'à 5 personnes.',
+      'prop.norte.beds':  '3 ch. / 2 sdb',
+      'prop.norte.desc':  'La suite principale dispose d\'un lit king (200×200 cm) et d\'une grande baignoire balnéo. La deuxième chambre a un king ; la troisième, un king et un canapé-lit simple (100×200 cm). Le salon ajoute deux lits suspendus de taille normale. Tous les lits king peuvent se séparer en lits simples, pour accueillir jusqu\'à 9 personnes dans diverses configurations.',
+      'prop.entera.beds': '5 ch. / 4 sdb',
+      'prop.entera.desc': 'Norte + Sur réunies. Louée en une seule unité, Casa Entera accueille jusqu\'à 13 personnes. Indiquez-nous les besoins de votre groupe et nous configurerons les lits en conséquence.',
+      'prop.p2':          'Conçue dans une optique de durabilité : le système d\'eau fonctionne à la récupération d\'eau de pluie, et les arbres fruitiers tropicaux fournissent des produits biologiques dans toute la propriété. Une grande partie des meubles a été fabriquée à la main par des artisans locaux à partir de matériaux récupérés et de bois tombé naturellement. L\'éclairage LED à intensité variable en tons chauds, ainsi que l\'orientation de la maison, les fenêtres et les ventilateurs de plafond ont été conçus pour maximiser la ventilation naturelle sans climatisation.',
+      'bocas.headline':   'La Diversité, c\'est la Découverte.',
+      'bocas.p1':         'La beauté de Bocas del Toro réside dans son extraordinaire diversité. Géographiquement et culturellement, il y a de nouvelles découvertes à chaque tournant — réparties sur cinq îles, chacune avec son caractère propre, toutes accessibles en quelques minutes de bateau.',
+      'bocas.p2':         'Le paysage évolue avec autant d\'intensité que la culture. Des collines pour la randonnée, des mangroves à explorer, des plages de sable blanc aux eaux calmes, et d\'autres avec des vagues de toutes tailles et intensités.',
+      'bocas.p3':         'Colón, l\'île principale, vibre au rythme d\'une communauté latine hispanophone — salsa et reggaeton, poulet mariné lentement, riz et haricots, piment habanero. Bastimentos, la plus grande île, abrite une communauté afro-caribéenne qui parle créole, fume tout à la jamaïcaine et vit au rythme du reggae et du dancehall. S\'y mêle une communauté d\'expatriés diversifiée — européens, nord et sud-américains, chinois — dont les boutiques et restaurants enrichissent encore plus la palette locale.',
+      'bocas.p4':         'Et Bocas ne s\'arrête pas au coucher du soleil. Les restaurants proposent des spectacles de jongleurs de feu, les bars servent des bières bon marché autour de parties de ping-pong et de billard, les wine bars et le jazz live animent les soirées, et les clubs en plein air construits sur l\'eau — avec trampolines, cordes et balançoires — vous propulsent directement dans un bain de minuit.',
+      'island.colon':     'Le cœur vibrant de l\'archipel — restaurants, vie nocturne et charme caribéen à l\'infini.',
+      'island.bocastown.name': 'Bocas Town',
+      'island.bocastown': 'Le coloré centre-ville au bord de l\'eau, où les taxis nautiques relient les îles.',
+      'island.bigcreek':  'Notre village natal — calme, sans hâte et plein de chaleur humaine.',
+      'island.zapatilla': 'Des plages de sable blanc dignes d\'une carte postale, bordées de palmiers ondoyants.',
+      'island.pajaros':   'Un luxuriant sanctuaire d\'oiseaux qui s\'élève dramatiquement des eaux cristallines de la Caraïbe.',
+      'island.bastimentos':'Jungle sauvage, communautés indigènes et vagues de classe mondiale.',
+      'island.archipelago.name': 'L\'Archipel',
+      'island.archipelago':'Plus de 200 îles, îlots et cayes à explorer.',
+      'island.ngabe.name':'Culture Ngäbe',
+      'island.ngabe':     'Le peuple indigène Ngäbe-Buglé apporte une culture et un artisanat profonds aux îles.',
+      'island.wildlife.name':'Faune Locale',
+      'island.wildlife':  'Paresseux à trois doigts, grenouilles venimeuses et tortues marines habitent ces îles.',
+      'act.surfing':      'Surf',             'act.surfing.desc':     'Des vagues de classe mondiale à deux pas de chez vous',
+      'act.snorkeling':   'Plongée en Apnée', 'act.snorkeling.desc':  'Explorez des récifs colorés et la vie marine',
+      'act.deepboarding': 'Deep Boarding',    'act.deepboarding.desc':'Glissez dans les eaux cristallines des Caraïbes',
+      'act.sup':          'Stand-Up Paddle',  'act.sup.desc':         'Naviguez sur les eaux calmes de l\'archipel',
+      'act.kayaking':     'Kayak',            'act.kayaking.desc':    'Pagayez dans les mangroves luxuriantes et les criques cachées',
+      'act.fishing':      'Pêche',            'act.fishing.desc':     'Pêche au tarpon et pêche sportive de renommée mondiale',
+      'act.atv':          'Aventures en ATV', 'act.atv.desc':         'Explorez les sentiers de la jungle d\'Isla Colón',
+      'act.caves':        'Exploration de Grottes','act.caves.desc':  'Découvrez des grottes cachées et des merveilles naturelles',
+      'act.cacao':        'Tours Cacao',      'act.cacao.desc':       'Visitez des plantations de cacao avec des familles locales',
+      'act.botanical':    'Jardins Botaniques','act.botanical.desc':  'Flânez parmi la flore tropicale luxuriante',
+      'act.scooter':      'Location de Scooters','act.scooter.desc':  'Explorez l\'île à votre propre rythme',
+      'act.zipline':      'Tyrolienne',       'act.zipline.desc':     'Survolez la canopée de la forêt tropicale',
+      'act.islands':      'Island Hopping',  'act.islands.desc':     'Explorez les superbes cayes de l\'archipel',
+      'act.beach':        'Journées Plage',  'act.beach.desc':       'Des kilomètres de sable blanc et de bleu caribéen',
+      'acts.intro':       'Le surf est à dix minutes à pied de la maison — les meilleures vagues et les plus régulières de Bocas del Toro sont à votre porte. Au-delà, l\'archipel offre quelque chose pour tout le monde.',
+      'acts.water':       'Sur l\'Eau',
+      'acts.land':        'Sur Terre',
+      'acts.excursions':  'Excursions',
+      'list.sup':         'Stand-Up Paddle',  'list.freediving':      'Apnée',
+      'list.scuba':       'Plongée Sous-Marine','list.yoga':          'Yoga',
+      'list.hiking':      'Randonnée',        'list.atv':             'Location d\'ATV',
+      'list.dunebuggy':   'Location de Buggy','list.islandtour':      'Tour des Îles',
+      'list.botanical':   'Tour Jardin Botanique','list.cacao':       'Tour Plantation de Cacao',
+      'list.zipline':     'Tour Tyrolienne',  'list.cave':            'Tour des Grottes',
+      'here.title':       'Comment Venir',
+      'here.panama.title':'Via Panama City',
+      'here.panama.desc': 'Volez jusqu\'à l\'aéroport international de Tocumen. Nous vous recommandons de passer une nuit en ville — le Canal, le Casco Viejo et la vieille ville valent vraiment le détour. Nous aimons beaucoup l\'<a href="https://www.americantradehotel.com/" target="_blank" rel="noopener">American Trade Hotel</a>. De là, prenez un taxi vers l\'aéroport d\'Albrook (30 min) et volez avec <a href="https://www.airpanama.com/en/destinos/panama" target="_blank" rel="noopener">Air Panama</a> directement à Bocas del Toro, en environ une heure. Un taxi depuis l\'aéroport vous amène à Casa Comunal en 5 minutes.',
+      'here.cr.title':    'Via San José, Costa Rica',
+      'here.cr.desc':     'Volez jusqu\'à l\'aéroport international Juan Santamaría à San José, puis prenez une correspondance avec <a href="https://www.flysansa.com/" target="_blank" rel="noopener">Sansa Air</a> directement à Bocas del Toro. Depuis l\'aéroport, un taxi de 5 minutes vous amène directement à Casa Comunal.',
+      'outreach.title':   'Bénévolat.',
+      'outreach.p1':      'Nous considérons comme un honneur de pouvoir vivre notre rêve dans ces îles préservées, et nous ne pourrions y parvenir sans les membres si gentils, talentueux et hospitaliers de la communauté de Bocas. À ce titre, nous nous efforçons de réduire notre impact environnemental tout en améliorant le bien-être des habitants qui nous entourent.',
+      'outreach.p2':      'Chaque année, nous donnons des denrées alimentaires de base et des matelas à des familles dans le besoin au sein de notre communauté, et nous contribuons aux collectes de l\'église locale qui apportent des fournitures essentielles aux familles indigènes de tout l\'archipel. De petits gestes, certes — mais faits avec un cœur plein et les mains ouvertes.',
+      'outreach.cta':     'Vous souhaitez vous impliquer ou en savoir plus sur nos programmes communautaires ? Nous serions ravis d\'avoir de vos nouvelles.',
+      'outreach.btn':     'Nous Contacter',
+      'bar.text':         'Réservez directement avec nous —',
+      'footer.credit':    '©Casa Comunal 2025 — Tous droits réservés<br>Photos : Olivier Frei et Maria Mangold',
+    }
+  };
+
+  function setLanguage(lang) {
+    if (!translations[lang]) return;
+    const t = translations[lang];
+
+    // Plain text elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    // HTML elements (support <br>, links, etc.)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Update active button state
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.trim().toLowerCase() === lang) btn.classList.add('active');
+    });
+
+    // Persist
+    try { localStorage.setItem('cc_lang', lang); } catch(e) {}
+  }
+
+  // Init from stored preference
+  (function() {
+    let saved = 'en';
+    try { saved = localStorage.getItem('cc_lang') || 'en'; } catch(e) {}
+    if (saved !== 'en') setLanguage(saved);
+  })();
+
+  // ── HERO SLIDESHOW ──
   const slides = document.querySelectorAll('.slide');
-  const dotsContainer = document.getElementById('dots');
   let current = 0;
   let timer;
 
-  slides.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i === 0 ? ' active' : '');
-    dot.onclick = (e) => { e.stopPropagation(); goTo(i); };
-    dotsContainer.appendChild(dot);
-  });
-
   function goTo(n) {
     slides[current].classList.remove('active');
-    dotsContainer.children[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
-    dotsContainer.children[current].classList.add('active');
     clearInterval(timer);
-    timer = setInterval(next, 3000);
+    timer = setInterval(next, 2500);
   }
 
-  function next() {
-    goTo(current + 1);
-  }
+  function next() { goTo(current + 1); }
 
-  timer = setInterval(next, 3000);
+  timer = setInterval(next, 2500);
 
-  // Tap/click anywhere on hero to advance
   document.querySelector('.hero').addEventListener('click', function(e) {
-    // Don't double-fire if clicking a dot
     if (e.target.closest('.hero-dots')) return;
+    if (e.target.closest('.hero-cta-row')) return;
     next();
   });
 
-  // Mobile menu
+  // ── MOBILE MENU ──
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
   }
@@ -1817,7 +2026,7 @@
     'rental': ['vrCarousel'],
     'bocas': ['islandsCarousel'],
     'activities': ['activitiesCarousel'],
-    'outreach': ['outreachCarousel']
+    'outreach': []
   };
 
   function showPage(id) {
@@ -1827,62 +2036,43 @@
       target.classList.add('active');
       window.scrollTo(0, 0);
     }
-    // highlight active nav link
     document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
       a.classList.remove('nav-active');
       if (a.getAttribute('onclick') && a.getAttribute('onclick').includes("'" + id + "'")) {
         a.classList.add('nav-active');
       }
     });
-    // restart carousels for this page from slide 0
     (pageCarousels[id] || []).forEach(cid => {
       if (carouselState[cid]) carouselState[cid](0);
     });
+    // Hide bar on home and rental (both have their own slideshow CTAs)
+    const bar = document.getElementById('directBar');
+    if (bar) bar.style.display = (id === 'home' || id === 'rental') ? 'none' : 'flex';
   }
 
-  // Nav scroll effect
+  // Nav scroll shadow
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
     nav.style.boxShadow = window.scrollY > 10 ? '0 1px 12px rgba(0,0,0,0.07)' : 'none';
   });
 
-  // Gallery lightbox
-  const vrImgs = document.querySelectorAll('.vr-gallery img');
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightbox-img');
-  let lbIndex = 0;
+  // Direct bar: hidden while hero is visible (home page)
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    const bar = document.getElementById('directBar');
+    if (!bar) return;
+    const onHome = document.getElementById('page-home').classList.contains('active');
+    if (onHome) bar.style.display = entry.isIntersecting ? 'none' : 'flex';
+  }, { threshold: 0.1 });
+  heroObserver.observe(document.getElementById('hero'));
 
-  vrImgs.forEach((img, i) => {
-    img.addEventListener('click', () => { lbIndex = i; openLightbox(); });
-  });
-
-  function openLightbox() {
-    lbImg.src = vrImgs[lbIndex].src;
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function lightboxNav(dir) {
-    lbIndex = (lbIndex + dir + vrImgs.length) % vrImgs.length;
-    lbImg.src = vrImgs[lbIndex].src;
-  }
-
-  lightbox.addEventListener('click', function(e) {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'ArrowRight') lightboxNav(1);
-    if (e.key === 'ArrowLeft') lightboxNav(-1);
-    if (e.key === 'Escape') closeLightbox();
-  });
-
+  // Direct bar: hidden while VR carousel is visible (rental page)
+  const vrObserver = new IntersectionObserver(([entry]) => {
+    const bar = document.getElementById('directBar');
+    if (!bar) return;
+    const onRental = document.getElementById('page-rental').classList.contains('active');
+    if (onRental) bar.style.display = entry.isIntersecting ? 'none' : 'flex';
+  }, { threshold: 0.1 });
+  vrObserver.observe(document.getElementById('vrCarousel'));
 </script>
 
 <script>
@@ -1893,37 +2083,40 @@
     const el = document.getElementById(id);
     if (!el) return;
     const track = el.querySelector('.section-carousel-track');
-    const slides = track.querySelectorAll('.carousel-slide');
+    const slides = Array.from(track.querySelectorAll('.carousel-slide'));
     const dotsEl = el.querySelector('.carousel-dots');
     const count = slides.length;
     let current = 0;
     let timer;
 
-    slides.forEach((_, i) => {
-      const d = document.createElement('div');
-      d.className = 'cdot' + (i === 0 ? ' active' : '');
-      d.onclick = () => goto(i);
-      dotsEl.appendChild(d);
-    });
+    slides[0].classList.add('active');
 
-    function update() {
-      track.style.transform = `translateX(-${current * 100}%)`;
-      dotsEl.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('active', i === current));
+    if (dotsEl) {
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'cdot' + (i === 0 ? ' active' : '');
+        d.onclick = () => goto(i);
+        dotsEl.appendChild(d);
+      });
+    }
+
+    function update(prev, next) {
+      slides[prev].classList.remove('active');
+      slides[next].classList.add('active');
+      if (dotsEl) dotsEl.querySelectorAll('.cdot').forEach((d, i) => d.classList.toggle('active', i === next));
     }
 
     function goto(n) {
+      const prev = current;
       current = (n + count) % count;
-      update();
+      update(prev, current);
       resetTimer();
     }
 
     function resetTimer() {
       clearInterval(timer);
-      timer = setInterval(() => goto(current + 1), 3000);
+      timer = setInterval(() => goto(current + 1), 2500);
     }
-
-    el.addEventListener('mouseenter', () => clearInterval(timer));
-    el.addEventListener('mouseleave', resetTimer);
 
     let tx = 0;
     el.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
@@ -1937,21 +2130,26 @@
   }
 
   function carouselMove(id, dir) {
-    // read current index from track transform and delegate to goto
     const el = document.getElementById(id);
     if (!el || !carouselState[id]) return;
     const track = el.querySelector('.section-carousel-track');
     const count = track.querySelectorAll('.carousel-slide').length;
-    const cur = Math.round(parseFloat((track.style.transform || 'translateX(0)').replace(/[^0-9.-]/g,'')) / 100) || 0;
-    carouselState[id](Math.abs(cur) + dir);
+    const cur = Array.from(track.querySelectorAll('.carousel-slide')).findIndex(s => s.classList.contains('active'));
+    carouselState[id](cur + dir);
   }
 
-  ['activitiesCarousel','islandsCarousel','vrCarousel','outreachCarousel'].forEach(initCarousel);
+  ['activitiesCarousel','islandsCarousel','vrCarousel'].forEach(initCarousel);
+
+  // VR carousel: click advances to next slide
+  document.getElementById('vrCarousel').addEventListener('click', function(e) {
+    if (e.target.closest('.carousel-arrow') || e.target.closest('.hero-cta-row')) return;
+    carouselMove('vrCarousel', 1);
+  });
 </script>
 
 <!-- DIRECT BOOKING BAR -->
-<div class="direct-bar" id="directBar">
-  <p>Book directly with us &mdash;</p>
+<div class="direct-bar" id="directBar" style="display:none">
+  <p data-i18n="bar.text">Book directly with us &mdash;</p>
   <a href="mailto:info@casacomunalpanama.com">info@casacomunalpanama.com</a>
   <button class="direct-bar-dismiss" onclick="document.getElementById('directBar').style.display='none'" aria-label="Dismiss">✕</button>
 </div>
